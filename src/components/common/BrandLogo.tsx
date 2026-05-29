@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-
+import logoImg from '@/assets/dev-logo.png'
 type BrandLogoProps = {
 	href?: string
 	size?: 'sm' | 'md' | 'lg'
@@ -32,7 +32,7 @@ export function BrandLogo({ href, size = 'md' }: BrandLogoProps) {
 			aria-label='DevVault'
 		>
 			<Image
-				src='/apple-touch-icon.png'
+				src={logoImg}
 				alt=''
 				width={current.icon}
 				height={current.icon}

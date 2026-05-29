@@ -1,5 +1,6 @@
 import { betterAuth } from 'better-auth'
 import { mongodbAdapter } from 'better-auth/adapters/mongodb'
+import { google } from 'better-auth/social-providers'
 import { MongoClient } from 'mongodb'
 
 const mongoUrl =
@@ -24,6 +25,14 @@ export const auth = betterAuth({
 		enabled: true,
 		requireEmailVerification: false,
 		minPasswordLength: 8,
+	},
+	socialProviders: {
+		google: {
+			enabled:
+				!!process.env.GOOGLE_CLIENT_ID && !!process.env.GOOGLE_CLIENT_SECRET,
+			clientId: process.env.GOOGLE_CLIENT_ID || '',
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+		},
 	},
 	session: {
 		expiresIn: 60 * 60 * 24 * 7, // 7 days
