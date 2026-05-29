@@ -69,11 +69,13 @@ export default async function ProjectDetailPage({
 				</div>
 
 				<div className='mt-6'>
-					<ExportMenu projectId={projectPayload._id} />
+					<div className='flex flex-col justify-between gap-3 sm:flex-row sm:items-center'>
+						<ExportMenu projectId={projectPayload._id} />
+						<EnvVariableForm projectId={projectPayload._id} />
+					</div>
 				</div>
 
-				<div className='mt-6 grid gap-6 xl:grid-cols-[380px_1fr]'>
-					<EnvVariableForm projectId={projectPayload._id} />
+				<div className='mt-6'>
 					<EnvVariableTable
 						projectId={projectPayload._id}
 						variables={safeVariables}

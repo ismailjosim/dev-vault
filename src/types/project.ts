@@ -65,6 +65,22 @@ export const envVariableCreateSchema = z.object({
 	expiryDate: z.string().datetime().nullable().optional(),
 })
 
+export const envVariableImportSchema = z.object({
+	variables: z
+		.array(
+			envVariableCreateSchema.pick({
+				key: true,
+				value: true,
+				type: true,
+				isPublic: true,
+				note: true,
+				environment: true,
+			}),
+		)
+		.min(1)
+		.max(200),
+})
+
 export const envVariableUpdateSchema = envVariableCreateSchema
 	.partial()
 	.refine((value) => Object.keys(value).length > 0, {
