@@ -15,33 +15,59 @@ Set up the project structure, configure tooling, and initialize the repository.
 
 ### 1.2 Project Setup
 
-- [ ] Initialize Next.js project: `npx create-next-app@latest devvault --typescript --tailwind --app`
-- [ ] Install base dependencies:
+**Requirements:**
 
-  ```
-  pnpm add react react-dom next
-  pnpm add -D typescript @types/react @types/node
-  ```
+- Node.js v20.9 or higher
+- pnpm (recommended) or npm
 
-- [ ] Configure `tsconfig.json` and `next.config.js`
+**Initialize Next.js (Latest v16):**
+
+```bash
+pnpm create next-app@latest devvault --yes
+cd devvault
+pnpm dev
+```
+
+This sets up:
+
+- TypeScript (latest)
+- Tailwind CSS v3
+- ESLint/Biome
+- App Router
+- Turbopack (default bundler)
+- `@/*` import alias
 
 ### 1.3 Install Core Dependencies
 
+**Authentication & Database:**
+
 ```bash
+pnpm add better-auth@latest
 pnpm add mongodb mongoose
-pnpm add next-auth @auth/mongodb-adapter
+pnpm add bcryptjs
+```
+
+**UI & Validation:**
+
+```bash
 pnpm add zod react-hook-form
 pnpm add @radix-ui/react-dialog @radix-ui/react-dropdown-menu
 pnpm add clsx tailwind-merge class-variance-authority
 pnpm add lucide-react
+```
+
+**Utilities:**
+
+```bash
 pnpm add crypto-js dotenv
+pnpm add framer-motion
 ```
 
 ### 1.4 Development Dependencies
 
 ```bash
-pnpm add -D @types/crypto-js
-pnpm add -D tailwindcss postcss autoprefixer
+pnpm add -D @types/crypto-js @types/bcryptjs
+pnpm add -D @types/node typescript
 ```
 
 ### 1.5 Project Structure
