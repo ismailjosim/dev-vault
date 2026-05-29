@@ -1,6 +1,5 @@
 'use client'
 
-import { authClient } from '@/lib/auth-client'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 interface AuthContextType {

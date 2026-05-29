@@ -1,9 +1,14 @@
 import { betterAuth } from 'better-auth'
 import { mongodbAdapter } from 'better-auth/adapters/mongodb'
-import { connectDB } from './mongodb'
+import { MongoClient } from 'mongodb'
+
+const mongoClient = new MongoClient(process.env.MONGODB_URL!)
 
 export const auth = betterAuth({
-	database: mongodbAdapter(process.env.MONGODB_URL!),
+	database: mongodbAdapter(mongoClient.db(), {
+		client: mongoClient,
+		transaction: false,
+	}),
 	secret: process.env.BETTER_AUTH_SECRET!,
 	baseURL: process.env.BETTER_AUTH_URL,
 	emailAndPassword: {
@@ -15,7 +20,7 @@ export const auth = betterAuth({
 		expiresIn: 60 * 60 * 24 * 7, // 7 days
 		updateAge: 60 * 60 * 24, // Update every 24 hours
 		cookieCache: {
-			disabled: false,
+			enabled: false,
 		},
 	},
 	appName: 'DevVault',

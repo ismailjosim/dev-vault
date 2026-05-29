@@ -15,12 +15,9 @@ export function SignupForm() {
 		register,
 		handleSubmit,
 		formState: { errors },
-		watch,
 	} = useForm<SignUpInput>({
 		resolver: zodResolver(signUpSchema),
 	})
-
-	const password = watch('password')
 
 	const onSubmit = async (data: SignUpInput) => {
 		if (data.password !== data.confirmPassword) {
