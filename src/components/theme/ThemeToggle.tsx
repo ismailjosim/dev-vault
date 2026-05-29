@@ -20,12 +20,12 @@ export function ThemeToggle() {
 
 	if (!mounted) {
 		return (
-			<div className='h-9 w-[116px] rounded-md border border-border bg-secondary' />
+			<div className='border-border bg-secondary h-9 w-[116px] rounded-md border' />
 		)
 	}
 
 	return (
-		<div className='inline-flex rounded-md border border-border bg-card p-1'>
+		<div className='border-border bg-card inline-flex rounded-md border p-1'>
 			{themeOptions.map((option) => {
 				const Icon = option.icon
 				const isActive = theme === option.value

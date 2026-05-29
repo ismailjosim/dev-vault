@@ -1,7 +1,5 @@
 import { EnvVariableForm } from '@/components/env/EnvVariableForm'
-import {
-	EnvVariableSummary,
-} from '@/components/env/EnvVariableItem'
+import { EnvVariableSummary } from '@/components/env/EnvVariableItem'
 import { EnvVariableTable } from '@/components/env/EnvVariableTable'
 import { ExportMenu } from '@/components/env/ExportMenu'
 import { DeleteProjectDialog } from '@/components/projects/DeleteProjectDialog'
@@ -43,10 +41,10 @@ export default async function ProjectDetailPage({
 	const projectPayload = serializeDocument<ProjectSummary>(project)
 
 	return (
-		<main className='min-h-screen bg-background px-6 py-8'>
+		<main className='bg-background min-h-screen px-6 py-8'>
 			<div className='mx-auto max-w-6xl'>
 				<div className='flex items-center justify-between'>
-					<Link href='/dashboard' className='text-sm text-muted-foreground'>
+					<Link href='/dashboard' className='text-muted-foreground text-sm'>
 						Back to dashboard
 					</Link>
 					<ThemeToggle />
@@ -54,14 +52,14 @@ export default async function ProjectDetailPage({
 
 				<div className='mt-4 flex flex-col justify-between gap-4 sm:flex-row sm:items-start'>
 					<div>
-						<h1 className='text-2xl font-semibold text-foreground'>
+						<h1 className='text-foreground text-2xl font-semibold'>
 							{projectPayload.projectName}
 						</h1>
-						<p className='mt-1 max-w-2xl text-sm text-muted-foreground'>
+						<p className='text-muted-foreground mt-1 max-w-2xl text-sm'>
 							{projectPayload.description || 'No description yet'}
 						</p>
 						<div className='mt-3 flex flex-wrap gap-2'>
-							<span className='rounded bg-secondary px-2 py-1 text-xs text-secondary-foreground'>
+							<span className='bg-secondary text-secondary-foreground rounded px-2 py-1 text-xs'>
 								{projectPayload.category}
 							</span>
 							<span className='rounded bg-emerald-100 px-2 py-1 text-xs text-emerald-800'>

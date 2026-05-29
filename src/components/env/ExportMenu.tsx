@@ -1,16 +1,33 @@
 'use client'
 
 export function ExportMenu({ projectId }: { projectId: string }) {
-	async function exportProject(format: string) {
+	const formats = [
+		'env',
+		'env.local',
+		'env.production',
+		'env.development',
+		'env.test',
+		'json',
+		'yaml',
+		'markdown',
+		'example',
+	]
+
+	async function getExport(format: string, environment = '') {
 		const response = await fetch(`/api/projects/${projectId}/export`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ format }),
+			body: JSON.stringify({ format, environment: environment || undefined }),
 		})
-		const payload = (await response.json()) as {
+
+		return (await response.json()) as {
 			filename: string
 			content: string
 		}
+	}
+
+	async function exportProject(format: string) {
+		const payload = await getExport(format)
 		const blob = new Blob([payload.content], { type: 'text/plain' })
 		const url = URL.createObjectURL(blob)
 		const anchor = document.createElement('a')
@@ -20,17 +37,33 @@ export function ExportMenu({ projectId }: { projectId: string }) {
 		URL.revokeObjectURL(url)
 	}
 
+	async function copyProject(format: string) {
+		const payload = await getExport(format)
+		await navigator.clipboard.writeText(payload.content)
+	}
+
 	return (
 		<div className='flex flex-wrap gap-2'>
-			{['env', 'env.local', 'env.production', 'json', 'example'].map((format) => (
-				<button
+			{formats.map((format) => (
+				<div
 					key={format}
-					type='button'
-					onClick={() => exportProject(format)}
-					className='rounded-md border border-border px-3 py-2 text-sm text-foreground hover:bg-hover'
+					className='border-border flex overflow-hidden rounded-md border'
 				>
-					Export {format}
-				</button>
+					<button
+						type='button'
+						onClick={() => exportProject(format)}
+						className='text-foreground hover:bg-hover px-3 py-2 text-sm'
+					>
+						Export {format}
+					</button>
+					<button
+						type='button'
+						onClick={() => copyProject(format)}
+						className='border-border text-muted-foreground hover:bg-hover hover:text-foreground border-l px-3 py-2 text-sm'
+					>
+						Copy
+					</button>
+				</div>
 			))}
 		</div>
 	)

@@ -1,0 +1,54 @@
+import {
+	SnippetDetail,
+	SnippetViewer,
+} from '@/components/snippets/SnippetViewer'
+import { ThemeToggle } from '@/components/theme/ThemeToggle'
+import { serializeDocument } from '@/lib/api'
+import { connectDB } from '@/lib/mongodb'
+import { getCurrentUser } from '@/lib/session'
+import { Snippet } from '@/models/Snippet'
+import { getBuiltInSnippet } from '@/utils/snippets'
+import Link from 'next/link'
+import { notFound, redirect } from 'next/navigation'
+
+type SnippetPageProps = {
+	params: Promise<{ id: string }>
+}
+
+export default async function SnippetPage({ params }: SnippetPageProps) {
+	const user = await getCurrentUser()
+	if (!user?.id) redirect('/auth/login')
+
+	const { id } = await params
+	const builtInSnippet = getBuiltInSnippet(id)
+	let snippet: SnippetDetail | null = builtInSnippet
+		? {
+				...builtInSnippet,
+				_id: builtInSnippet.id,
+			}
+		: null
+
+	if (!snippet) {
+		await connectDB()
+		const customSnippet = await Snippet.findOne({ _id: id, userId: user.id })
+		if (!customSnippet) notFound()
+		snippet = serializeDocument<SnippetDetail>(customSnippet)
+	}
+
+	return (
+		<main className='bg-background min-h-screen px-6 py-8'>
+			<div className='mx-auto max-w-6xl'>
+				<div className='mb-4 flex items-center justify-between'>
+					<Link
+						href='/dashboard/snippets'
+						className='text-muted-foreground text-sm'
+					>
+						Back to snippets
+					</Link>
+					<ThemeToggle />
+				</div>
+				<SnippetViewer snippet={snippet} />
+			</div>
+		</main>
+	)
+}

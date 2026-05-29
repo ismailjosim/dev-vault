@@ -3,17 +3,17 @@ import { ThemeToggle } from '@/components/theme/ThemeToggle'
 
 export default function SignupPage() {
 	return (
-		<div className='flex min-h-screen items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8'>
-			<div className='absolute right-6 top-6'>
+		<div className='bg-background flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8'>
+			<div className='absolute top-6 right-6'>
 				<ThemeToggle />
 			</div>
 			<div className='w-full max-w-md'>
 				<div className='text-center'>
-					<h1 className='text-3xl font-bold text-foreground'>DevVault</h1>
-					<h2 className='mt-2 text-xl font-semibold text-foreground'>
+					<h1 className='text-foreground text-3xl font-bold'>DevVault</h1>
+					<h2 className='text-foreground mt-2 text-xl font-semibold'>
 						Create your account
 					</h2>
-					<p className='mt-2 text-sm text-muted-foreground'>
+					<p className='text-muted-foreground mt-2 text-sm'>
 						Securely manage your environment variables and secrets
 					</p>
 				</div>

@@ -45,41 +45,43 @@ export function ProjectForm() {
 	return (
 		<form onSubmit={onSubmit} className='max-w-2xl space-y-5'>
 			{error && (
-				<div className='rounded border border-danger/30 bg-danger-foreground px-4 py-3 text-sm text-danger'>
+				<div className='border-danger/30 bg-danger-foreground text-danger rounded border px-4 py-3 text-sm'>
 					{error}
 				</div>
 			)}
 
 			<div>
-				<label className='block text-sm font-medium text-foreground'>Name</label>
+				<label className='text-foreground block text-sm font-medium'>
+					Name
+				</label>
 				<input
 					name='projectName'
 					required
-					className='mt-1 w-full rounded-md border border-border bg-card px-3 py-2 text-foreground outline-none focus:border-muted-foreground'
+					className='border-border bg-card text-foreground focus:border-muted-foreground mt-1 w-full rounded-md border px-3 py-2 outline-none'
 					placeholder='DevVault'
 				/>
 			</div>
 
 			<div>
-				<label className='block text-sm font-medium text-foreground'>
+				<label className='text-foreground block text-sm font-medium'>
 					Description
 				</label>
 				<textarea
 					name='description'
 					rows={4}
-					className='mt-1 w-full rounded-md border border-border bg-card px-3 py-2 text-foreground outline-none focus:border-muted-foreground'
+					className='border-border bg-card text-foreground focus:border-muted-foreground mt-1 w-full rounded-md border px-3 py-2 outline-none'
 					placeholder='What does this project use these variables for?'
 				/>
 			</div>
 
 			<div className='grid gap-4 sm:grid-cols-2'>
 				<div>
-					<label className='block text-sm font-medium text-foreground'>
+					<label className='text-foreground block text-sm font-medium'>
 						Category
 					</label>
 					<select
 						name='category'
-						className='mt-1 w-full rounded-md border border-border bg-card px-3 py-2 text-foreground outline-none focus:border-muted-foreground'
+						className='border-border bg-card text-foreground focus:border-muted-foreground mt-1 w-full rounded-md border px-3 py-2 outline-none'
 					>
 						<option>Full Stack</option>
 						<option>Frontend</option>
@@ -90,22 +92,24 @@ export function ProjectForm() {
 				</div>
 
 				<div>
-					<label className='block text-sm font-medium text-foreground'>
+					<label className='text-foreground block text-sm font-medium'>
 						Framework
 					</label>
 					<input
 						name='framework'
 						defaultValue='Next.js'
-						className='mt-1 w-full rounded-md border border-border bg-card px-3 py-2 text-foreground outline-none focus:border-muted-foreground'
+						className='border-border bg-card text-foreground focus:border-muted-foreground mt-1 w-full rounded-md border px-3 py-2 outline-none'
 					/>
 				</div>
 			</div>
 
 			<div>
-				<label className='block text-sm font-medium text-foreground'>Tags</label>
+				<label className='text-foreground block text-sm font-medium'>
+					Tags
+				</label>
 				<input
 					name='tags'
-					className='mt-1 w-full rounded-md border border-border bg-card px-3 py-2 text-foreground outline-none focus:border-muted-foreground'
+					className='border-border bg-card text-foreground focus:border-muted-foreground mt-1 w-full rounded-md border px-3 py-2 outline-none'
 					placeholder='auth, payments, production'
 				/>
 			</div>
@@ -113,7 +117,7 @@ export function ProjectForm() {
 			<button
 				type='submit'
 				disabled={isSubmitting}
-				className='rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-60'
+				className='bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm font-semibold disabled:opacity-60'
 			>
 				{isSubmitting ? 'Creating...' : 'Create project'}
 			</button>

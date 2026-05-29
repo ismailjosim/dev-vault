@@ -24,14 +24,20 @@ export async function POST(request: NextRequest, context: RouteContext) {
 		const template = getBuiltInTemplate(templateId)
 
 		if (!template) {
-			return NextResponse.json({ message: 'Template not found' }, { status: 404 })
+			return NextResponse.json(
+				{ message: 'Template not found' },
+				{ status: 404 },
+			)
 		}
 
 		const input = applyTemplateSchema.parse(await request.json())
 		const project = await Project.findOne({ _id: id, userId })
 
 		if (!project) {
-			return NextResponse.json({ message: 'Project not found' }, { status: 404 })
+			return NextResponse.json(
+				{ message: 'Project not found' },
+				{ status: 404 },
+			)
 		}
 
 		const savedVariables = []
@@ -63,9 +69,9 @@ export async function POST(request: NextRequest, context: RouteContext) {
 
 		return NextResponse.json({
 			count: savedVariables.length,
-			variables: serializeDocument<Record<string, unknown>[]>(savedVariables).map(
-				(variable) => ({ ...variable, value: null }),
-			),
+			variables: serializeDocument<Record<string, unknown>[]>(
+				savedVariables,
+			).map((variable) => ({ ...variable, value: null })),
 		})
 	} catch (error) {
 		return handleApiError(error)

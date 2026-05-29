@@ -5,16 +5,16 @@ export function TemplateCard({ template }: { template: BuiltInTemplate }) {
 	return (
 		<Link
 			href={`/dashboard/templates/${template.id}`}
-			className='block rounded-lg border border-border bg-card p-4 text-card-foreground transition hover:border-muted-foreground'
+			className='border-border bg-card text-card-foreground hover:border-muted-foreground block rounded-lg border p-4 transition'
 		>
 			<div className='flex items-start justify-between gap-3'>
 				<div>
 					<h2 className='text-base font-semibold'>{template.name}</h2>
-					<p className='mt-1 line-clamp-2 text-sm text-muted-foreground'>
+					<p className='text-muted-foreground mt-1 line-clamp-2 text-sm'>
 						{template.description}
 					</p>
 				</div>
-				<span className='rounded bg-secondary px-2 py-1 text-xs text-secondary-foreground'>
+				<span className='bg-secondary text-secondary-foreground rounded px-2 py-1 text-xs'>
 					{template.variables.length} vars
 				</span>
 			</div>

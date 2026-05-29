@@ -30,7 +30,9 @@ export function EnvVariableItem({
 
 	async function getDecryptedValue() {
 		const response = await fetch(`/api/projects/${projectId}/env?reveal=true`)
-		const payload = (await response.json()) as { variables: EnvVariableSummary[] }
+		const payload = (await response.json()) as {
+			variables: EnvVariableSummary[]
+		}
 		const current = payload.variables.find((item) => item._id === variable._id)
 
 		return current?.value || ''
@@ -72,18 +74,22 @@ export function EnvVariableItem({
 	}
 
 	return (
-		<tr className='border-t border-border'>
-			<td className='px-3 py-3 font-mono text-sm text-foreground'>{variable.key}</td>
-			<td className='max-w-[220px] truncate px-3 py-3 font-mono text-sm text-muted-foreground'>
+		<tr className='border-border border-t'>
+			<td className='text-foreground px-3 py-3 font-mono text-sm'>
+				{variable.key}
+			</td>
+			<td className='text-muted-foreground max-w-[220px] truncate px-3 py-3 font-mono text-sm'>
 				{revealedValue ?? '••••••••'}
 			</td>
 			<td className='px-3 py-3'>
-				<span className='rounded bg-secondary px-2 py-1 text-xs text-secondary-foreground'>
+				<span className='bg-secondary text-secondary-foreground rounded px-2 py-1 text-xs'>
 					{variable.type}
 				</span>
 			</td>
-			<td className='px-3 py-3 text-sm text-muted-foreground'>{variable.environment}</td>
-			<td className='px-3 py-3 text-sm text-muted-foreground'>
+			<td className='text-muted-foreground px-3 py-3 text-sm'>
+				{variable.environment}
+			</td>
+			<td className='text-muted-foreground px-3 py-3 text-sm'>
 				{variable.expiryDate
 					? `Expires ${variable.expiryDate.slice(0, 10)}`
 					: variable.note}
@@ -119,7 +125,11 @@ export function EnvVariableItem({
 					>
 						<FileCode2 className='h-4 w-4' />
 					</IconAction>
-					<IconAction label='Delete variable' onClick={deleteVariable} tone='danger'>
+					<IconAction
+						label='Delete variable'
+						onClick={deleteVariable}
+						tone='danger'
+					>
 						<Trash2 className='h-4 w-4' />
 					</IconAction>
 				</div>

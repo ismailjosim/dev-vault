@@ -19,7 +19,10 @@ export async function POST(request: NextRequest, context: RouteContext) {
 		const project = await Project.findOne({ _id: id, userId })
 
 		if (!project) {
-			return NextResponse.json({ message: 'Project not found' }, { status: 404 })
+			return NextResponse.json(
+				{ message: 'Project not found' },
+				{ status: 404 },
+			)
 		}
 
 		const input = envVariableImportSchema.parse(await request.json())
@@ -48,7 +51,8 @@ export async function POST(request: NextRequest, context: RouteContext) {
 
 		await project.save()
 
-		const variables = serializeDocument<Record<string, unknown>[]>(savedVariables)
+		const variables =
+			serializeDocument<Record<string, unknown>[]>(savedVariables)
 
 		return NextResponse.json({
 			variables: variables.map((variable) => ({

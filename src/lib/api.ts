@@ -31,7 +31,10 @@ export function handleApiError(error: unknown) {
 	}
 
 	console.error('API error:', error)
-	return NextResponse.json({ message: 'Internal server error' }, { status: 500 })
+	return NextResponse.json(
+		{ message: 'Internal server error' },
+		{ status: 500 },
+	)
 }
 
 export function serializeDocument<T>(document: unknown): T {

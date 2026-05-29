@@ -15,7 +15,9 @@ const defaultOptions: PasswordOptions = {
 
 export function PasswordGenerator() {
 	const [options, setOptions] = useState<PasswordOptions>(defaultOptions)
-	const [password, setPassword] = useState(() => generatePassword(defaultOptions))
+	const [password, setPassword] = useState(() =>
+		generatePassword(defaultOptions),
+	)
 	const [history, setHistory] = useState<string[]>([])
 	const [copied, setCopied] = useState(false)
 	const [error, setError] = useState<string | null>(null)
@@ -44,11 +46,15 @@ export function PasswordGenerator() {
 	function generateNext() {
 		try {
 			const nextPassword = generatePassword(options)
-			setHistory((current) => [password, ...current].filter(Boolean).slice(0, 5))
+			setHistory((current) =>
+				[password, ...current].filter(Boolean).slice(0, 5),
+			)
 			setPassword(nextPassword)
 			setError(null)
 		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Could not generate password')
+			setError(
+				err instanceof Error ? err.message : 'Could not generate password',
+			)
 		}
 	}
 
@@ -60,13 +66,13 @@ export function PasswordGenerator() {
 
 	return (
 		<div className='grid gap-6 lg:grid-cols-[1fr_320px]'>
-			<section className='rounded-lg border border-border bg-card p-5'>
+			<section className='border-border bg-card rounded-lg border p-5'>
 				<div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
 					<div>
-						<h2 className='text-base font-semibold text-card-foreground'>
+						<h2 className='text-card-foreground text-base font-semibold'>
 							Generated password
 						</h2>
-						<p className='mt-1 text-sm text-muted-foreground'>
+						<p className='text-muted-foreground mt-1 text-sm'>
 							Strength: {strength}
 						</p>
 					</div>
@@ -74,7 +80,7 @@ export function PasswordGenerator() {
 						<button
 							type='button'
 							onClick={() => copyPassword()}
-							className='inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm text-foreground hover:bg-hover'
+							className='border-border text-foreground hover:bg-hover inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm'
 						>
 							<Copy className='h-4 w-4' />
 							{copied ? 'Copied' : 'Copy'}
@@ -82,7 +88,7 @@ export function PasswordGenerator() {
 						<button
 							type='button'
 							onClick={generateNext}
-							className='inline-flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90'
+							className='bg-primary text-primary-foreground inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold hover:opacity-90'
 						>
 							<RefreshCw className='h-4 w-4' />
 							Generate
@@ -90,22 +96,24 @@ export function PasswordGenerator() {
 					</div>
 				</div>
 
-				<div className='mt-5 overflow-x-auto rounded-md border border-border bg-background p-4 font-mono text-sm text-foreground'>
+				<div className='border-border bg-background text-foreground mt-5 overflow-x-auto rounded-md border p-4 font-mono text-sm'>
 					{password}
 				</div>
 
-				{error && <p className='mt-3 text-sm text-danger'>{error}</p>}
+				{error && <p className='text-danger mt-3 text-sm'>{error}</p>}
 
 				{history.length > 0 && (
 					<div className='mt-6'>
-						<h3 className='text-sm font-medium text-foreground'>Session history</h3>
+						<h3 className='text-foreground text-sm font-medium'>
+							Session history
+						</h3>
 						<div className='mt-2 space-y-2'>
 							{history.map((item) => (
 								<button
 									key={item}
 									type='button'
 									onClick={() => copyPassword(item)}
-									className='block w-full truncate rounded-md border border-border px-3 py-2 text-left font-mono text-xs text-muted-foreground hover:bg-hover hover:text-foreground'
+									className='border-border text-muted-foreground hover:bg-hover hover:text-foreground block w-full truncate rounded-md border px-3 py-2 text-left font-mono text-xs'
 								>
 									{item}
 								</button>
@@ -115,26 +123,52 @@ export function PasswordGenerator() {
 				)}
 			</section>
 
-			<section className='rounded-lg border border-border bg-card p-5'>
-				<h2 className='text-base font-semibold text-card-foreground'>Options</h2>
+			<section className='border-border bg-card rounded-lg border p-5'>
+				<h2 className='text-card-foreground text-base font-semibold'>
+					Options
+				</h2>
 				<label className='mt-4 block'>
-					<span className='text-sm text-muted-foreground'>Length: {options.length}</span>
+					<span className='text-muted-foreground text-sm'>
+						Length: {options.length}
+					</span>
 					<input
 						type='range'
 						min='8'
 						max='32'
 						value={options.length}
-						onChange={(event) => updateOption('length', Number(event.target.value))}
+						onChange={(event) =>
+							updateOption('length', Number(event.target.value))
+						}
 						className='mt-2 w-full'
 					/>
 				</label>
 
 				<div className='mt-4 space-y-3'>
-					<OptionToggle label='Uppercase' checked={options.uppercase} onChange={(value) => updateOption('uppercase', value)} />
-					<OptionToggle label='Lowercase' checked={options.lowercase} onChange={(value) => updateOption('lowercase', value)} />
-					<OptionToggle label='Numbers' checked={options.numbers} onChange={(value) => updateOption('numbers', value)} />
-					<OptionToggle label='Symbols' checked={options.symbols} onChange={(value) => updateOption('symbols', value)} />
-					<OptionToggle label='Exclude confusing chars' checked={options.excludeConfusing} onChange={(value) => updateOption('excludeConfusing', value)} />
+					<OptionToggle
+						label='Uppercase'
+						checked={options.uppercase}
+						onChange={(value) => updateOption('uppercase', value)}
+					/>
+					<OptionToggle
+						label='Lowercase'
+						checked={options.lowercase}
+						onChange={(value) => updateOption('lowercase', value)}
+					/>
+					<OptionToggle
+						label='Numbers'
+						checked={options.numbers}
+						onChange={(value) => updateOption('numbers', value)}
+					/>
+					<OptionToggle
+						label='Symbols'
+						checked={options.symbols}
+						onChange={(value) => updateOption('symbols', value)}
+					/>
+					<OptionToggle
+						label='Exclude confusing chars'
+						checked={options.excludeConfusing}
+						onChange={(value) => updateOption('excludeConfusing', value)}
+					/>
 				</div>
 			</section>
 		</div>
@@ -151,7 +185,7 @@ function OptionToggle({
 	onChange: (checked: boolean) => void
 }) {
 	return (
-		<label className='flex items-center justify-between gap-3 rounded-md border border-border px-3 py-2 text-sm text-foreground'>
+		<label className='border-border text-foreground flex items-center justify-between gap-3 rounded-md border px-3 py-2 text-sm'>
 			{label}
 			<input
 				type='checkbox'

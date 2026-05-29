@@ -2,7 +2,8 @@ import { betterAuth } from 'better-auth'
 import { mongodbAdapter } from 'better-auth/adapters/mongodb'
 import { MongoClient } from 'mongodb'
 
-const mongoUrl = process.env.MONGODB_URL || 'mongodb://localhost:27017/dev-vault'
+const mongoUrl =
+	process.env.MONGODB_URL || 'mongodb://localhost:27017/dev-vault'
 const mongoClient = new MongoClient(mongoUrl)
 const authBaseUrl =
 	process.env.BETTER_AUTH_URL ||

@@ -61,6 +61,52 @@ export function parseEnvText(text: string): {
 	return { variables, invalidLines }
 }
 
+export function validateKeyName(key: string) {
+	return /^[A-Z][A-Z0-9_]*$/.test(key)
+}
+
+export function detectEnvType(
+	key: string,
+	value = '',
+): 'secret' | 'jwt' | 'api_key' | 'url' | 'database_url' | 'other' {
+	const normalizedKey = key.toUpperCase()
+	const normalizedValue = value.toLowerCase()
+
+	if (
+		normalizedKey.includes('DATABASE_URL') ||
+		normalizedKey.includes('MONGODB_URI')
+	) {
+		return 'database_url'
+	}
+
+	if (normalizedKey.includes('JWT') || normalizedKey.includes('TOKEN')) {
+		return 'jwt'
+	}
+
+	if (
+		normalizedKey.includes('SECRET') ||
+		normalizedKey.includes('PRIVATE') ||
+		normalizedKey.includes('PASSWORD')
+	) {
+		return 'secret'
+	}
+
+	if (normalizedKey.includes('API_KEY') || normalizedKey.endsWith('_KEY')) {
+		return 'api_key'
+	}
+
+	if (
+		normalizedKey.includes('URL') ||
+		normalizedKey.includes('URI') ||
+		normalizedValue.startsWith('http://') ||
+		normalizedValue.startsWith('https://')
+	) {
+		return 'url'
+	}
+
+	return 'other'
+}
+
 function normalizeEnvValue(value: string): string {
 	if (
 		(value.startsWith('"') && value.endsWith('"')) ||

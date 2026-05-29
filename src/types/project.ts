@@ -19,10 +19,7 @@ export const envTypeSchema = z.enum([
 
 export const environmentSchema = z.enum(['dev', 'prod', 'staging', 'test'])
 
-const tagsSchema = z
-	.array(z.string().trim().min(1).max(32))
-	.max(12)
-	.default([])
+const tagsSchema = z.array(z.string().trim().min(1).max(32)).max(12).default([])
 
 export const projectCreateSchema = z.object({
 	projectName: z.string().trim().min(2).max(80),
@@ -56,7 +53,10 @@ export const envVariableCreateSchema = z.object({
 		.trim()
 		.min(1)
 		.max(120)
-		.regex(/^[A-Z][A-Z0-9_]*$/, 'Use uppercase letters, numbers, and underscores'),
+		.regex(
+			/^[A-Z][A-Z0-9_]*$/,
+			'Use uppercase letters, numbers, and underscores',
+		),
 	value: z.string().min(1).max(10000),
 	type: envTypeSchema.default('other'),
 	isPublic: z.boolean().default(false),
@@ -93,7 +93,17 @@ export const envQuerySchema = z.object({
 })
 
 export const exportSchema = z.object({
-	format: z.enum(['env', 'env.local', 'env.production', 'json', 'example']),
+	format: z.enum([
+		'env',
+		'env.local',
+		'env.production',
+		'env.development',
+		'env.test',
+		'json',
+		'yaml',
+		'markdown',
+		'example',
+	]),
 	environment: environmentSchema.optional(),
 })
 

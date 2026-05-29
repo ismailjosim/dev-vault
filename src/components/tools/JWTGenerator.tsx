@@ -7,7 +7,9 @@ import { useState } from 'react'
 export function JWTGenerator() {
 	const [length, setLength] = useState(64)
 	const [accessSecret, setAccessSecret] = useState(() => generateJWTSecret(64))
-	const [refreshSecret, setRefreshSecret] = useState(() => generateJWTSecret(64))
+	const [refreshSecret, setRefreshSecret] = useState(() =>
+		generateJWTSecret(64),
+	)
 	const [copied, setCopied] = useState<string | null>(null)
 
 	function generateBoth() {
@@ -25,13 +27,13 @@ export function JWTGenerator() {
 
 	return (
 		<div className='space-y-6'>
-			<section className='rounded-lg border border-border bg-card p-5'>
+			<section className='border-border bg-card rounded-lg border p-5'>
 				<div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
 					<div>
-						<h2 className='text-base font-semibold text-card-foreground'>
+						<h2 className='text-card-foreground text-base font-semibold'>
 							JWT secrets
 						</h2>
-						<p className='mt-1 text-sm text-muted-foreground'>
+						<p className='text-muted-foreground mt-1 text-sm'>
 							Strength: {length >= 64 ? 'Strong' : 'Needs 64+ characters'}
 						</p>
 					</div>
@@ -39,7 +41,7 @@ export function JWTGenerator() {
 						<button
 							type='button'
 							onClick={() => copy('formatted', formatted)}
-							className='inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm text-foreground hover:bg-hover'
+							className='border-border text-foreground hover:bg-hover inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm'
 						>
 							<Copy className='h-4 w-4' />
 							{copied === 'formatted' ? 'Copied' : 'Copy .env'}
@@ -47,7 +49,7 @@ export function JWTGenerator() {
 						<button
 							type='button'
 							onClick={generateBoth}
-							className='inline-flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90'
+							className='bg-primary text-primary-foreground inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold hover:opacity-90'
 						>
 							<RefreshCw className='h-4 w-4' />
 							Generate both
@@ -56,7 +58,9 @@ export function JWTGenerator() {
 				</div>
 
 				<label className='mt-5 block max-w-sm'>
-					<span className='text-sm text-muted-foreground'>Length: {length}</span>
+					<span className='text-muted-foreground text-sm'>
+						Length: {length}
+					</span>
 					<input
 						type='range'
 						min='64'
@@ -100,14 +104,14 @@ function SecretBlock({
 	onRegenerate: () => void
 }) {
 	return (
-		<section className='rounded-lg border border-border bg-card p-5'>
+		<section className='border-border bg-card rounded-lg border p-5'>
 			<div className='flex items-center justify-between gap-3'>
-				<h3 className='text-sm font-medium text-card-foreground'>{label}</h3>
+				<h3 className='text-card-foreground text-sm font-medium'>{label}</h3>
 				<div className='flex gap-2'>
 					<button
 						type='button'
 						onClick={onCopy}
-						className='inline-flex h-9 items-center gap-2 rounded-md border border-border px-3 text-sm text-foreground hover:bg-hover'
+						className='border-border text-foreground hover:bg-hover inline-flex h-9 items-center gap-2 rounded-md border px-3 text-sm'
 					>
 						<Copy className='h-4 w-4' />
 						{copied ? 'Copied' : 'Copy'}
@@ -115,7 +119,7 @@ function SecretBlock({
 					<button
 						type='button'
 						onClick={onRegenerate}
-						className='inline-flex h-9 items-center justify-center rounded-md border border-border px-3 text-foreground hover:bg-hover'
+						className='border-border text-foreground hover:bg-hover inline-flex h-9 items-center justify-center rounded-md border px-3'
 						title='Regenerate'
 						aria-label='Regenerate'
 					>
@@ -123,7 +127,7 @@ function SecretBlock({
 					</button>
 				</div>
 			</div>
-			<div className='mt-3 overflow-x-auto rounded-md border border-border bg-background p-4 font-mono text-xs text-foreground'>
+			<div className='border-border bg-background text-foreground mt-3 overflow-x-auto rounded-md border p-4 font-mono text-xs'>
 				{value}
 			</div>
 		</section>

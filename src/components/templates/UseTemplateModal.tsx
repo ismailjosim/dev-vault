@@ -54,7 +54,7 @@ export function UseTemplateModal({
 			<Dialog.Trigger asChild>
 				<button
 					type='button'
-					className='rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90'
+					className='bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm font-semibold hover:opacity-90'
 				>
 					Use template
 				</button>
@@ -62,29 +62,29 @@ export function UseTemplateModal({
 
 			<Dialog.Portal>
 				<Dialog.Overlay className='fixed inset-0 z-40 bg-black/60' />
-				<Dialog.Content className='fixed left-1/2 top-1/2 z-50 w-[calc(100vw-32px)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card text-card-foreground shadow-2xl'>
-					<div className='flex items-center justify-between border-b border-border px-5 py-4'>
+				<Dialog.Content className='border-border bg-card text-card-foreground fixed top-1/2 left-1/2 z-50 w-[calc(100vw-32px)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg border shadow-2xl'>
+					<div className='border-border flex items-center justify-between border-b px-5 py-4'>
 						<Dialog.Title className='text-base font-semibold'>
 							Apply {template.name}
 						</Dialog.Title>
-						<Dialog.Close className='rounded p-1 text-muted-foreground hover:text-foreground'>
+						<Dialog.Close className='text-muted-foreground hover:text-foreground rounded p-1'>
 							<X className='h-4 w-4' />
 						</Dialog.Close>
 					</div>
 
 					<div className='space-y-4 px-5 py-4'>
 						{error && (
-							<div className='rounded-md border border-danger/30 bg-danger-foreground px-3 py-2 text-sm text-danger'>
+							<div className='border-danger/30 bg-danger-foreground text-danger rounded-md border px-3 py-2 text-sm'>
 								{error}
 							</div>
 						)}
 
 						<label className='block'>
-							<span className='text-sm text-muted-foreground'>Project</span>
+							<span className='text-muted-foreground text-sm'>Project</span>
 							<select
 								value={projectId}
 								onChange={(event) => setProjectId(event.target.value)}
-								className='mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-foreground'
+								className='border-border bg-background text-foreground mt-1 w-full rounded-md border px-3 py-2'
 							>
 								{projects.map((project) => (
 									<option key={project._id} value={project._id}>
@@ -95,11 +95,11 @@ export function UseTemplateModal({
 						</label>
 
 						<label className='block'>
-							<span className='text-sm text-muted-foreground'>Environment</span>
+							<span className='text-muted-foreground text-sm'>Environment</span>
 							<select
 								value={environment}
 								onChange={(event) => setEnvironment(event.target.value)}
-								className='mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-foreground'
+								className='border-border bg-background text-foreground mt-1 w-full rounded-md border px-3 py-2'
 							>
 								<option value='dev'>Development</option>
 								<option value='staging'>Staging</option>
@@ -108,21 +108,21 @@ export function UseTemplateModal({
 							</select>
 						</label>
 
-						<p className='text-sm text-muted-foreground'>
-							This will add empty variables from the template. Existing matching keys
-							in the selected environment are left untouched.
+						<p className='text-muted-foreground text-sm'>
+							This will add empty variables from the template. Existing matching
+							keys in the selected environment are left untouched.
 						</p>
 					</div>
 
-					<div className='flex justify-end gap-3 border-t border-border px-5 py-4'>
-						<Dialog.Close className='rounded-md border border-border px-4 py-2 text-sm text-foreground hover:bg-hover'>
+					<div className='border-border flex justify-end gap-3 border-t px-5 py-4'>
+						<Dialog.Close className='border-border text-foreground hover:bg-hover rounded-md border px-4 py-2 text-sm'>
 							Cancel
 						</Dialog.Close>
 						<button
 							type='button'
 							onClick={applyTemplate}
 							disabled={!projectId || isSubmitting}
-							className='inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-60'
+							className='bg-primary text-primary-foreground inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold disabled:opacity-60'
 						>
 							<Check className='h-4 w-4' />
 							{isSubmitting ? 'Applying...' : 'Apply'}

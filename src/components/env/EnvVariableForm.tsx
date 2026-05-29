@@ -24,9 +24,9 @@ export function EnvVariableForm({ projectId }: { projectId: string }) {
 	const [isSensitive, setIsSensitive] = useState(true)
 	const [isValueVisible, setIsValueVisible] = useState(false)
 	const [selectedEnvironments, setSelectedEnvironments] = useState(['prod'])
-	const [importedVariables, setImportedVariables] = useState<ParsedEnvVariable[]>(
-		[],
-	)
+	const [importedVariables, setImportedVariables] = useState<
+		ParsedEnvVariable[]
+	>([])
 	const [error, setError] = useState<string | null>(null)
 	const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -138,57 +138,61 @@ export function EnvVariableForm({ projectId }: { projectId: string }) {
 			}}
 		>
 			<Dialog.Trigger asChild>
-				<button className='rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90'>
+				<button className='bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm font-semibold hover:opacity-90'>
 					Add environment variable
 				</button>
 			</Dialog.Trigger>
 
 			<Dialog.Portal>
 				<Dialog.Overlay className='fixed inset-0 z-40 bg-black/60' />
-				<Dialog.Content className='fixed left-1/2 top-1/2 z-50 w-[calc(100vw-32px)] max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg border border-border bg-card text-card-foreground shadow-2xl'>
-					<div className='flex items-center justify-between border-b border-border px-5 py-4'>
+				<Dialog.Content className='border-border bg-card text-card-foreground fixed top-1/2 left-1/2 z-50 w-[calc(100vw-32px)] max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg border shadow-2xl'>
+					<div className='border-border flex items-center justify-between border-b px-5 py-4'>
 						<Dialog.Title className='text-base font-semibold'>
 							Add Environment Variable
 						</Dialog.Title>
-						<Dialog.Close className='rounded p-1 text-muted-foreground hover:text-foreground'>
+						<Dialog.Close className='text-muted-foreground hover:text-foreground rounded p-1'>
 							<X className='h-4 w-4' />
 						</Dialog.Close>
 					</div>
 
 					<div className='max-h-[75vh] overflow-y-auto px-5 py-4'>
 						{error && (
-							<div className='mb-4 rounded-md border border-danger/30 bg-danger-foreground px-3 py-2 text-sm text-danger'>
+							<div className='border-danger/30 bg-danger-foreground text-danger mb-4 rounded-md border px-3 py-2 text-sm'>
 								{error}
 							</div>
 						)}
 
 						<div className='space-y-4'>
 							<label className='block'>
-								<span className='text-xs font-medium text-muted-foreground'>Key</span>
+								<span className='text-muted-foreground text-xs font-medium'>
+									Key
+								</span>
 								<input
 									value={key}
 									onChange={(event) => onKeyChange(event.target.value)}
 									disabled={importedVariables.length > 0}
-									className='mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-muted-foreground disabled:opacity-60'
+									className='border-border bg-background text-foreground focus:border-muted-foreground mt-1 w-full rounded-md border px-3 py-2 text-sm outline-none disabled:opacity-60'
 									placeholder='API_KEY'
 								/>
 							</label>
 
 							<label className='block'>
-								<span className='text-xs font-medium text-muted-foreground'>Value</span>
-								<div className='mt-1 flex rounded-md border border-border bg-background focus-within:border-muted-foreground'>
+								<span className='text-muted-foreground text-xs font-medium'>
+									Value
+								</span>
+								<div className='border-border bg-background focus-within:border-muted-foreground mt-1 flex rounded-md border'>
 									<input
 										value={value}
 										onChange={(event) => setValue(event.target.value)}
 										disabled={importedVariables.length > 0}
 										type={isValueVisible ? 'text' : 'password'}
-										className='min-w-0 flex-1 bg-transparent px-3 py-2 text-sm text-foreground outline-none disabled:opacity-60'
+										className='text-foreground min-w-0 flex-1 bg-transparent px-3 py-2 text-sm outline-none disabled:opacity-60'
 										placeholder='secret value'
 									/>
 									<button
 										type='button'
 										onClick={() => setIsValueVisible((current) => !current)}
-										className='px-3 text-muted-foreground hover:text-foreground'
+										className='text-muted-foreground hover:text-foreground px-3'
 									>
 										{isValueVisible ? (
 											<EyeOff className='h-4 w-4' />
@@ -200,29 +204,29 @@ export function EnvVariableForm({ projectId }: { projectId: string }) {
 							</label>
 
 							<label className='block'>
-								<span className='text-xs font-medium text-muted-foreground'>
+								<span className='text-muted-foreground text-xs font-medium'>
 									Note (Optional)
 								</span>
 								<input
 									value={note}
 									onChange={(event) => setNote(event.target.value)}
-									className='mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-muted-foreground'
+									className='border-border bg-background text-foreground focus:border-muted-foreground mt-1 w-full rounded-md border px-3 py-2 text-sm outline-none'
 									placeholder='Where to rotate, or who to contact'
 								/>
 							</label>
 						</div>
 
 						{importedVariables.length > 0 && (
-							<div className='mt-4 rounded-md border border-border'>
-								<div className='flex items-center justify-between border-b border-border px-3 py-2'>
-									<span className='text-sm text-foreground'>
+							<div className='border-border mt-4 rounded-md border'>
+								<div className='border-border flex items-center justify-between border-b px-3 py-2'>
+									<span className='text-foreground text-sm'>
 										Detected {importedVariables.length} variable
 										{importedVariables.length === 1 ? '' : 's'}
 									</span>
 									<button
 										type='button'
 										onClick={() => setImportedVariables([])}
-										className='text-xs text-muted-foreground hover:text-foreground'
+										className='text-muted-foreground hover:text-foreground text-xs'
 									>
 										Clear
 									</button>
@@ -231,19 +235,21 @@ export function EnvVariableForm({ projectId }: { projectId: string }) {
 									{importedVariables.map((variable) => (
 										<div
 											key={variable.key}
-											className='grid grid-cols-[1fr_120px] border-b border-border px-3 py-2 text-sm last:border-b-0'
+											className='border-border grid grid-cols-[1fr_120px] border-b px-3 py-2 text-sm last:border-b-0'
 										>
-											<span className='truncate font-mono text-foreground'>
+											<span className='text-foreground truncate font-mono'>
 												{variable.key}
 											</span>
-											<span className='font-mono text-muted-foreground'>••••••••</span>
+											<span className='text-muted-foreground font-mono'>
+												••••••••
+											</span>
 										</div>
 									))}
 								</div>
 							</div>
 						)}
 
-						<div className='mt-5 border-t border-border pt-4'>
+						<div className='border-border mt-5 border-t pt-4'>
 							<div className='flex items-center justify-between gap-3'>
 								<div className='flex items-center gap-2'>
 									<button
@@ -254,18 +260,18 @@ export function EnvVariableForm({ projectId }: { projectId: string }) {
 										}`}
 									>
 										<span
-											className={`h-4 w-4 rounded-full bg-card transition ${
+											className={`bg-card h-4 w-4 rounded-full transition ${
 												isSensitive ? 'translate-x-4' : ''
 											}`}
 										/>
 									</button>
-									<span className='text-sm text-foreground'>Sensitive</span>
+									<span className='text-foreground text-sm'>Sensitive</span>
 								</div>
 
 								<select
 									value={type}
 									onChange={(event) => setType(event.target.value)}
-									className='rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground'
+									className='border-border bg-background text-foreground rounded-md border px-3 py-2 text-sm'
 								>
 									<option value='secret'>Secret</option>
 									<option value='jwt'>JWT</option>
@@ -277,12 +283,14 @@ export function EnvVariableForm({ projectId }: { projectId: string }) {
 							</div>
 
 							<div className='mt-4'>
-								<p className='text-xs font-medium text-muted-foreground'>Environments</p>
+								<p className='text-muted-foreground text-xs font-medium'>
+									Environments
+								</p>
 								<div className='mt-2 space-y-2'>
 									{environments.map((environment) => (
 										<label
 											key={environment.id}
-											className='flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm text-foreground'
+											className='border-border text-foreground flex items-center gap-2 rounded-md border px-3 py-2 text-sm'
 										>
 											<input
 												type='checkbox'
@@ -298,8 +306,8 @@ export function EnvVariableForm({ projectId }: { projectId: string }) {
 						</div>
 					</div>
 
-					<div className='flex items-center justify-between gap-3 border-t border-border px-5 py-4'>
-						<div className='flex flex-wrap items-center gap-2 text-xs text-muted-foreground'>
+					<div className='border-border flex items-center justify-between gap-3 border-t px-5 py-4'>
+						<div className='text-muted-foreground flex flex-wrap items-center gap-2 text-xs'>
 							<input
 								ref={fileInputRef}
 								type='file'
@@ -310,7 +318,7 @@ export function EnvVariableForm({ projectId }: { projectId: string }) {
 							<button
 								type='button'
 								onClick={() => fileInputRef.current?.click()}
-								className='inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm text-foreground hover:bg-hover'
+								className='border-border text-foreground hover:bg-hover inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm'
 							>
 								<Upload className='h-4 w-4' />
 								Import .env
@@ -322,7 +330,7 @@ export function EnvVariableForm({ projectId }: { projectId: string }) {
 							type='button'
 							onClick={saveVariables}
 							disabled={variablesToSave.length === 0 || isSubmitting}
-							className='inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-60'
+							className='bg-primary text-primary-foreground inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold disabled:opacity-60'
 						>
 							{importedVariables.length === 0 && <Plus className='h-4 w-4' />}
 							{isSubmitting ? 'Saving...' : 'Save'}

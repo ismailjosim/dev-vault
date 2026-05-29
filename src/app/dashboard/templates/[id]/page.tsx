@@ -28,10 +28,13 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
 	})
 
 	return (
-		<main className='min-h-screen bg-background px-6 py-8'>
+		<main className='bg-background min-h-screen px-6 py-8'>
 			<div className='mx-auto max-w-6xl'>
 				<div className='flex items-center justify-between'>
-					<Link href='/dashboard/templates' className='text-sm text-muted-foreground'>
+					<Link
+						href='/dashboard/templates'
+						className='text-muted-foreground text-sm'
+					>
 						Back to templates
 					</Link>
 					<ThemeToggle />
@@ -39,10 +42,10 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
 
 				<div className='mt-4 flex flex-col justify-between gap-4 sm:flex-row sm:items-start'>
 					<div>
-						<h1 className='text-2xl font-semibold text-foreground'>
+						<h1 className='text-foreground text-2xl font-semibold'>
 							{template.name}
 						</h1>
-						<p className='mt-1 max-w-2xl text-sm text-muted-foreground'>
+						<p className='text-muted-foreground mt-1 max-w-2xl text-sm'>
 							{template.description}
 						</p>
 					</div>
@@ -54,17 +57,17 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
 					) : (
 						<Link
 							href='/dashboard/projects/create'
-							className='rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90'
+							className='bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm font-semibold hover:opacity-90'
 						>
 							Create project
 						</Link>
 					)}
 				</div>
 
-				<div className='mt-6 overflow-hidden rounded-lg border border-border bg-card'>
+				<div className='border-border bg-card mt-6 overflow-hidden rounded-lg border'>
 					<table className='w-full min-w-[640px] text-left'>
 						<thead>
-							<tr className='text-xs uppercase text-muted-foreground'>
+							<tr className='text-muted-foreground text-xs uppercase'>
 								<th className='px-3 py-3'>Key</th>
 								<th className='px-3 py-3'>Type</th>
 								<th className='px-3 py-3'>Placeholder</th>
@@ -72,16 +75,16 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
 						</thead>
 						<tbody>
 							{template.variables.map((variable) => (
-								<tr key={variable.key} className='border-t border-border'>
-									<td className='px-3 py-3 font-mono text-sm text-foreground'>
+								<tr key={variable.key} className='border-border border-t'>
+									<td className='text-foreground px-3 py-3 font-mono text-sm'>
 										{variable.key}
 									</td>
 									<td className='px-3 py-3'>
-										<span className='rounded bg-secondary px-2 py-1 text-xs text-secondary-foreground'>
+										<span className='bg-secondary text-secondary-foreground rounded px-2 py-1 text-xs'>
 											{variable.type}
 										</span>
 									</td>
-									<td className='px-3 py-3 text-sm text-muted-foreground'>
+									<td className='text-muted-foreground px-3 py-3 text-sm'>
 										{variable.placeholder || 'Empty value'}
 									</td>
 								</tr>

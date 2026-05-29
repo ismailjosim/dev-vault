@@ -9,18 +9,18 @@ export default async function CreateProjectPage() {
 	if (!user?.id) redirect('/auth/login')
 
 	return (
-		<main className='min-h-screen bg-background px-6 py-8'>
+		<main className='bg-background min-h-screen px-6 py-8'>
 			<div className='mx-auto max-w-6xl'>
 				<div className='flex items-center justify-between'>
-					<Link href='/dashboard' className='text-sm text-muted-foreground'>
+					<Link href='/dashboard' className='text-muted-foreground text-sm'>
 						Back to dashboard
 					</Link>
 					<ThemeToggle />
 				</div>
-				<h1 className='mt-4 text-2xl font-semibold text-foreground'>
+				<h1 className='text-foreground mt-4 text-2xl font-semibold'>
 					Create project
 				</h1>
-				<div className='mt-6 rounded-lg border border-border bg-card p-6'>
+				<div className='border-border bg-card mt-6 rounded-lg border p-6'>
 					<ProjectForm />
 				</div>
 			</div>

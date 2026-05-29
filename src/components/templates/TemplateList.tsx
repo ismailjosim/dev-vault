@@ -12,7 +12,11 @@ export function TemplateList({ templates }: { templates: BuiltInTemplate[] }) {
 		if (!value) return templates
 
 		return templates.filter((template) =>
-			[template.name, template.description, ...template.variables.map((item) => item.key)]
+			[
+				template.name,
+				template.description,
+				...template.variables.map((item) => item.key),
+			]
 				.join(' ')
 				.toLowerCase()
 				.includes(value),
@@ -22,12 +26,12 @@ export function TemplateList({ templates }: { templates: BuiltInTemplate[] }) {
 	return (
 		<div>
 			<div className='relative max-w-xl'>
-				<Search className='pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground' />
+				<Search className='text-muted-foreground pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2' />
 				<input
 					value={query}
 					onChange={(event) => setQuery(event.target.value)}
 					placeholder='Search templates'
-					className='w-full rounded-md border border-border bg-card py-2 pl-9 pr-3 text-foreground outline-none focus:border-muted-foreground'
+					className='border-border bg-card text-foreground focus:border-muted-foreground w-full rounded-md border py-2 pr-3 pl-9 outline-none'
 				/>
 			</div>
 

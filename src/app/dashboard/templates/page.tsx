@@ -10,18 +10,18 @@ export default async function TemplatesPage() {
 	if (!user?.id) redirect('/auth/login')
 
 	return (
-		<main className='min-h-screen bg-background px-6 py-8'>
+		<main className='bg-background min-h-screen px-6 py-8'>
 			<div className='mx-auto max-w-6xl'>
 				<div className='flex items-center justify-between'>
-					<Link href='/dashboard' className='text-sm text-muted-foreground'>
+					<Link href='/dashboard' className='text-muted-foreground text-sm'>
 						Back to dashboard
 					</Link>
 					<ThemeToggle />
 				</div>
-				<h1 className='mt-4 text-2xl font-semibold text-foreground'>
+				<h1 className='text-foreground mt-4 text-2xl font-semibold'>
 					Environment templates
 				</h1>
-				<p className='mt-1 text-sm text-muted-foreground'>
+				<p className='text-muted-foreground mt-1 text-sm'>
 					Start projects faster with common environment variable sets.
 				</p>
 				<div className='mt-6'>

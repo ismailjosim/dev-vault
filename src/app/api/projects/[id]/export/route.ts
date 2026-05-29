@@ -3,6 +3,7 @@ import { connectDB } from '@/lib/mongodb'
 import { EnvVariable } from '@/models/EnvVariable'
 import { Project } from '@/models/Project'
 import { exportSchema } from '@/types/project'
+import { generateEnvFile, getExportFilename } from '@/utils/env-exporter'
 import { NextRequest, NextResponse } from 'next/server'
 
 type RouteContext = {
@@ -30,33 +31,19 @@ export async function POST(request: NextRequest, context: RouteContext) {
 
 		if (input.environment) filter.environment = input.environment
 
-		const variables = await EnvVariable.find(filter).sort({ key: 1 })
-
-		if (input.format === 'json') {
-			return NextResponse.json({
-				filename: `${project.slug}.json`,
-				content: JSON.stringify(
-					Object.fromEntries(
-						variables.map((variable) => [
-							variable.key,
-							variable.getDecryptedValue(),
-						]),
-					),
-					null,
-					2,
-				),
-			})
-		}
-
-		const filename =
-			input.format === 'example' ? '.env.example' : `.${input.format}`
-		const content = variables
-			.map((variable) => {
-				const value =
-					input.format === 'example' ? '' : variable.getDecryptedValue()
-				return `${variable.key}=${value}`
-			})
-			.join('\n')
+		const variables = await EnvVariable.find(filter).sort({
+			environment: 1,
+			key: 1,
+		})
+		const exportVariables = variables.map((variable) => ({
+			key: variable.key,
+			value: variable.getDecryptedValue(),
+			note: variable.note,
+			type: variable.type,
+			environment: variable.environment,
+		}))
+		const filename = getExportFilename(project.slug, input.format)
+		const content = generateEnvFile(exportVariables, input.format)
 
 		return NextResponse.json({ filename, content })
 	} catch (error) {

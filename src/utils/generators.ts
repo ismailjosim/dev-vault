@@ -30,13 +30,18 @@ function cleanCharacters(characters: string, excludeConfusing: boolean) {
 export function generateRandomString(length: number, characters: string) {
 	if (length <= 0 || characters.length === 0) return ''
 
-	return Array.from({ length }, () => characters[secureRandomIndex(characters.length)]).join('')
+	return Array.from(
+		{ length },
+		() => characters[secureRandomIndex(characters.length)],
+	).join('')
 }
 
 export function generatePassword(options: PasswordOptions) {
 	const groups = [
-		options.uppercase && cleanCharacters(uppercaseChars, options.excludeConfusing),
-		options.lowercase && cleanCharacters(lowercaseChars, options.excludeConfusing),
+		options.uppercase &&
+			cleanCharacters(uppercaseChars, options.excludeConfusing),
+		options.lowercase &&
+			cleanCharacters(lowercaseChars, options.excludeConfusing),
 		options.numbers && cleanCharacters(numberChars, options.excludeConfusing),
 		options.symbols && symbolChars,
 	].filter(Boolean) as string[]
@@ -46,7 +51,9 @@ export function generatePassword(options: PasswordOptions) {
 	}
 
 	const characters = groups.join('')
-	const requiredCharacters = groups.map((group) => group[secureRandomIndex(group.length)])
+	const requiredCharacters = groups.map(
+		(group) => group[secureRandomIndex(group.length)],
+	)
 	const remaining = generateRandomString(
 		Math.max(options.length - requiredCharacters.length, 0),
 		characters,
@@ -55,7 +62,10 @@ export function generatePassword(options: PasswordOptions) {
 
 	for (let index = password.length - 1; index > 0; index -= 1) {
 		const swapIndex = secureRandomIndex(index + 1)
-		;[password[index], password[swapIndex]] = [password[swapIndex], password[index]]
+		;[password[index], password[swapIndex]] = [
+			password[swapIndex],
+			password[index],
+		]
 	}
 
 	return password.slice(0, options.length).join('')

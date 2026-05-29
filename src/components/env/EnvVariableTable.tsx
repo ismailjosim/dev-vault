@@ -12,17 +12,17 @@ export function EnvVariableTable({
 }) {
 	if (variables.length === 0) {
 		return (
-			<div className='rounded-lg border border-dashed border-border bg-card p-6 text-center text-sm text-muted-foreground'>
+			<div className='border-border bg-card text-muted-foreground rounded-lg border border-dashed p-6 text-center text-sm'>
 				No environment variables yet.
 			</div>
 		)
 	}
 
 	return (
-		<div className='overflow-x-auto rounded-lg border border-border bg-card'>
+		<div className='border-border bg-card overflow-x-auto rounded-lg border'>
 			<table className='w-full min-w-[760px] text-left'>
 				<thead>
-					<tr className='text-xs uppercase text-muted-foreground'>
+					<tr className='text-muted-foreground text-xs uppercase'>
 						<th className='px-3 py-3'>Key</th>
 						<th className='px-3 py-3'>Value</th>
 						<th className='px-3 py-3'>Type</th>

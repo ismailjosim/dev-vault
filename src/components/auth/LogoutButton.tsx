@@ -31,7 +31,7 @@ export function LogoutButton() {
 			disabled={isSigningOut}
 			title='Log out'
 			aria-label='Log out'
-			className='inline-flex h-9 items-center gap-2 rounded-md border border-border bg-card px-3 text-sm font-medium text-foreground transition hover:bg-hover disabled:cursor-not-allowed disabled:opacity-50'
+			className='border-border bg-card text-foreground hover:bg-hover inline-flex h-9 items-center gap-2 rounded-md border px-3 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-50'
 		>
 			<LogOut className='h-4 w-4' />
 			<span>{isSigningOut ? 'Logging out...' : 'Log out'}</span>

@@ -23,7 +23,7 @@ export function DeleteProjectDialog({ projectId }: { projectId: string }) {
 			type='button'
 			onClick={deleteProject}
 			disabled={isDeleting}
-			className='rounded-md border border-danger/40 px-3 py-2 text-sm font-medium text-danger disabled:opacity-60'
+			className='border-danger/40 text-danger rounded-md border px-3 py-2 text-sm font-medium disabled:opacity-60'
 		>
 			{isDeleting ? 'Deleting...' : 'Delete'}
 		</button>

@@ -23,7 +23,7 @@ export function FilterPanel() {
 				name='category'
 				onChange={setFilter}
 				defaultValue={params.get('category') || ''}
-				className='rounded-md border border-border bg-card px-3 py-2 text-foreground outline-none focus:border-muted-foreground'
+				className='border-border bg-card text-foreground focus:border-muted-foreground rounded-md border px-3 py-2 outline-none'
 			>
 				<option value=''>All categories</option>
 				<option>Full Stack</option>
@@ -36,7 +36,7 @@ export function FilterPanel() {
 				name='framework'
 				onChange={setFilter}
 				defaultValue={params.get('framework') || ''}
-				className='rounded-md border border-border bg-card px-3 py-2 text-foreground outline-none focus:border-muted-foreground'
+				className='border-border bg-card text-foreground focus:border-muted-foreground rounded-md border px-3 py-2 outline-none'
 			>
 				<option value=''>All frameworks</option>
 				<option>Next.js</option>

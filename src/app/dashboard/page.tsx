@@ -9,7 +9,15 @@ import { connectDB } from '@/lib/mongodb'
 import { serializeDocument } from '@/lib/api'
 import { Project } from '@/models/Project'
 import { projectQuerySchema } from '@/types/project'
-import { KeyRound, LayoutTemplate, ShieldCheck } from 'lucide-react'
+import {
+	Code2,
+	FileCheck2,
+	FileDown,
+	FileUp,
+	KeyRound,
+	LayoutTemplate,
+	ShieldCheck,
+} from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import type { ReactNode } from 'react'
@@ -52,12 +60,12 @@ export default async function DashboardPage({
 		.limit(query.limit)
 
 	return (
-		<main className='min-h-screen bg-background px-6 py-8'>
+		<main className='bg-background min-h-screen px-6 py-8'>
 			<div className='mx-auto max-w-6xl'>
 				<div className='flex flex-col justify-between gap-4 sm:flex-row sm:items-center'>
 					<div>
-						<h1 className='text-2xl font-semibold text-foreground'>Projects</h1>
-						<p className='mt-1 text-sm text-muted-foreground'>
+						<h1 className='text-foreground text-2xl font-semibold'>Projects</h1>
+						<p className='text-muted-foreground mt-1 text-sm'>
 							Manage project credentials and environment files.
 						</p>
 					</div>
@@ -66,7 +74,7 @@ export default async function DashboardPage({
 						<LogoutButton />
 						<Link
 							href='/dashboard/projects/create'
-							className='rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90'
+							className='bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm font-semibold hover:opacity-90'
 						>
 							New project
 						</Link>
@@ -78,7 +86,7 @@ export default async function DashboardPage({
 					<FilterPanel />
 				</div>
 
-				<div className='mt-6 grid gap-3 md:grid-cols-3'>
+				<div className='mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4'>
 					<ToolLink
 						href='/dashboard/tools/password-generator'
 						icon={<KeyRound className='h-4 w-4' />}
@@ -96,6 +104,30 @@ export default async function DashboardPage({
 						icon={<LayoutTemplate className='h-4 w-4' />}
 						title='Templates'
 						description='Apply common .env presets.'
+					/>
+					<ToolLink
+						href='/dashboard/snippets'
+						icon={<Code2 className='h-4 w-4' />}
+						title='Snippets'
+						description='Save reusable setup code.'
+					/>
+					<ToolLink
+						href='/dashboard/tools/import'
+						icon={<FileUp className='h-4 w-4' />}
+						title='Import .env'
+						description='Preview and save env files.'
+					/>
+					<ToolLink
+						href='/dashboard/tools/export'
+						icon={<FileDown className='h-4 w-4' />}
+						title='Export .env'
+						description='Download files in many formats.'
+					/>
+					<ToolLink
+						href='/dashboard/tools/env-checker'
+						icon={<FileCheck2 className='h-4 w-4' />}
+						title='Env checker'
+						description='Compare saved keys to examples.'
 					/>
 				</div>
 
@@ -123,13 +155,13 @@ function ToolLink({
 	return (
 		<Link
 			href={href}
-			className='rounded-lg border border-border bg-card p-4 text-card-foreground transition hover:border-muted-foreground'
+			className='border-border bg-card text-card-foreground hover:border-muted-foreground rounded-lg border p-4 transition'
 		>
 			<div className='flex items-center gap-2 text-sm font-semibold'>
 				{icon}
 				{title}
 			</div>
-			<p className='mt-1 text-sm text-muted-foreground'>{description}</p>
+			<p className='text-muted-foreground mt-1 text-sm'>{description}</p>
 		</Link>
 	)
 }
