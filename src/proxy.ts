@@ -1,36 +1,29 @@
 import { type NextRequest, NextResponse } from 'next/server'
 
-export async function proxy(request: NextRequest) {
+const publicRoutes = ['/', '/auth/login', '/auth/signup', '/auth/error']
+
+export function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl
 
-	// Public routes that don't require authentication
-	const publicRoutes = ['/auth/login', '/auth/signup', '/auth/error', '/']
+	const isPublicRoute = publicRoutes.some(
+		(route) => pathname === route || pathname.startsWith(`${route}/`),
+	)
 
-	// Check if current path is public
-	const isPublicRoute = publicRoutes.includes(pathname)
+	if (isPublicRoute) {
+		return NextResponse.next()
+	}
 
-	if (!isPublicRoute) {
-		// Check for session cookie
-		const sessionCookie = request.cookies.get('better-auth.session_token')
+	const sessionCookie = request.cookies.get('better-auth.session_token')
 
-		// If no session cookie and not a public route, redirect to login
-		if (!sessionCookie) {
-			return NextResponse.redirect(new URL('/auth/login', request.url))
-		}
+	if (!sessionCookie) {
+		const loginUrl = new URL('/auth/login', request.url)
+		loginUrl.searchParams.set('callbackUrl', pathname)
+		return NextResponse.redirect(loginUrl)
 	}
 
 	return NextResponse.next()
 }
 
 export const config = {
-	matcher: [
-		/*
-		 * Match all request paths except for the ones starting with:
-		 * - api (API routes)
-		 * - _next/static (static files)
-		 * - _next/image (image optimization files)
-		 * - favicon.ico (favicon file)
-		 */
-		'/((?!api|_next/static|_next/image|favicon.ico).*)',
-	],
+	matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)'],
 }
