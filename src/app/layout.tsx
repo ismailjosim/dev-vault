@@ -2,7 +2,9 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { AutoLockModal } from '@/components/auth/AutoLockModal'
 import { ThemeProvider } from '@/components/theme/ThemeProvider'
+import { ToastProvider } from '@/components/common/ToastProvider'
 import './globals.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -41,8 +43,10 @@ export default function RootLayout({
 		>
 			<body className='flex min-h-full flex-col' suppressHydrationWarning>
 				<ThemeProvider>
-					{children}
-					<AutoLockModal />
+					<ToastProvider>
+						{children}
+						<AutoLockModal />
+					</ToastProvider>
 				</ThemeProvider>
 			</body>
 		</html>

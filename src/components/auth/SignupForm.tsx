@@ -8,18 +8,17 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { readErrorMessage } from '@/utils/http'
 import { Eye, EyeOff } from 'lucide-react'
 import { authClient } from '@/lib/auth-client'
+import { toast } from 'react-toastify'
 
 export function SignupForm() {
 	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 	const [googleLoading, setGoogleLoading] = useState(false)
-	const [error, setError] = useState<string | null>(null)
 	const [showPassword, setShowPassword] = useState(false)
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
 	const handleGoogleSignUp = async () => {
 		setGoogleLoading(true)
-		setError(null)
 
 		try {
 			await authClient.signIn.social({
@@ -27,7 +26,9 @@ export function SignupForm() {
 				callbackURL: '/dashboard',
 			})
 		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Google sign-up failed')
+			const message =
+				err instanceof Error ? err.message : 'Google sign-up failed'
+			toast.error(message)
 			setGoogleLoading(false)
 		}
 	}
@@ -42,12 +43,11 @@ export function SignupForm() {
 
 	const onSubmit = async (data: SignUpInput) => {
 		if (data.password !== data.confirmPassword) {
-			setError('Passwords do not match')
+			toast.error('Passwords do not match')
 			return
 		}
 
 		setIsLoading(true)
-		setError(null)
 
 		try {
 			const response = await fetch('/api/auth/sign-up/email', {
@@ -63,30 +63,27 @@ export function SignupForm() {
 			})
 
 			if (!response.ok) {
-				setError(
-					await readErrorMessage(response, 'Signup failed. Please try again.'),
+				const errorMessage = await readErrorMessage(
+					response,
+					'Signup failed. Please try again.',
 				)
+				toast.error(errorMessage)
+				setIsLoading(false)
 				return
 			}
 
+			toast.success('Account created successfully!')
 			router.push('/dashboard')
 		} catch (err) {
-			setError(
-				err instanceof Error ? err.message : 'An error occurred during signup',
-			)
-		} finally {
+			const errorMessage =
+				err instanceof Error ? err.message : 'An error occurred during signup'
+			toast.error(errorMessage)
 			setIsLoading(false)
 		}
 	}
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
-			{error && (
-				<div className='border-danger/30 bg-danger-foreground text-danger rounded border px-4 py-3'>
-					{error}
-				</div>
-			)}
-
 			<div>
 				<label className='text-foreground block text-sm font-medium'>
 					Full Name
@@ -221,7 +218,7 @@ export function SignupForm() {
 							d='M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z'
 						/>
 					</svg>
-					{googleLoading ? 'Signing up...' : 'Google'}
+					{googleLoading ? 'Signing up...' : 'Continue with Google'}
 				</span>
 			</button>
 

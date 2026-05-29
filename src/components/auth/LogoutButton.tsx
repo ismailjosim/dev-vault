@@ -4,6 +4,7 @@ import { signOut } from '@/lib/auth-client'
 import { LogOut } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 export function LogoutButton() {
 	const router = useRouter()
@@ -12,16 +13,21 @@ export function LogoutButton() {
 	const handleLogout = async () => {
 		setIsSigningOut(true)
 
-		await signOut({
-			fetchOptions: {
-				onSuccess: () => {
-					router.push('/auth/login')
-					router.refresh()
+		try {
+			await signOut({
+				fetchOptions: {
+					onSuccess: () => {
+						toast.success('Logged out successfully')
+						router.push('/auth/login')
+						router.refresh()
+					},
 				},
-			},
-		})
-
-		setIsSigningOut(false)
+			})
+		} catch (err) {
+			const message = err instanceof Error ? err.message : 'Logout failed'
+			toast.error(message)
+			setIsSigningOut(false)
+		}
 	}
 
 	return (
