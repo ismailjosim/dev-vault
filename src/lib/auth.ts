@@ -2,15 +2,23 @@ import { betterAuth } from 'better-auth'
 import { mongodbAdapter } from 'better-auth/adapters/mongodb'
 import { MongoClient } from 'mongodb'
 
-const mongoClient = new MongoClient(process.env.MONGODB_URL!)
+const mongoUrl = process.env.MONGODB_URL || 'mongodb://localhost:27017/dev-vault'
+const mongoClient = new MongoClient(mongoUrl)
+const authBaseUrl =
+	process.env.BETTER_AUTH_URL ||
+	process.env.NEXT_PUBLIC_APP_URL ||
+	'http://localhost:3000'
+const authSecret =
+	process.env.BETTER_AUTH_SECRET ||
+	'dev-vault-local-secret-for-builds-only-000000'
 
 export const auth = betterAuth({
 	database: mongodbAdapter(mongoClient.db(), {
 		client: mongoClient,
 		transaction: false,
 	}),
-	secret: process.env.BETTER_AUTH_SECRET!,
-	baseURL: process.env.BETTER_AUTH_URL,
+	secret: authSecret,
+	baseURL: authBaseUrl,
 	emailAndPassword: {
 		enabled: true,
 		requireEmailVerification: false,
