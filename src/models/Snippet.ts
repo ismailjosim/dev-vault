@@ -6,8 +6,12 @@ export interface ISnippet extends Document {
 	category: string
 	language: string
 	code: string
+	description: string
 	requiredEnv: string[]
 	tags: string[]
+	starCount: number
+	isPublic: boolean
+	isBuiltIn: boolean
 	createdAt: Date
 	updatedAt: Date
 }
@@ -49,6 +53,10 @@ const snippetSchema = new Schema<ISnippet>(
 			type: String,
 			required: true,
 		},
+		description: {
+			type: String,
+			default: '',
+		},
 		requiredEnv: {
 			type: [String],
 			default: [],
@@ -56,6 +64,19 @@ const snippetSchema = new Schema<ISnippet>(
 		tags: {
 			type: [String],
 			default: [],
+			index: true,
+		},
+		starCount: {
+			type: Number,
+			default: 0,
+		},
+		isPublic: {
+			type: Boolean,
+			default: false,
+		},
+		isBuiltIn: {
+			type: Boolean,
+			default: false,
 			index: true,
 		},
 	},
@@ -67,6 +88,7 @@ const snippetSchema = new Schema<ISnippet>(
 // Index for efficient user snippet queries
 snippetSchema.index({ userId: 1, createdAt: -1 })
 snippetSchema.index({ userId: 1, category: 1 })
+snippetSchema.index({ title: 'text', description: 'text', tags: 'text' })
 
 export const Snippet =
 	mongoose.models.Snippet || mongoose.model<ISnippet>('Snippet', snippetSchema)

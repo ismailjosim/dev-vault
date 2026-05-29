@@ -1,0 +1,46 @@
+import {
+	EnvVariableItem,
+	EnvVariableSummary,
+} from '@/components/env/EnvVariableItem'
+
+export function EnvVariableTable({
+	projectId,
+	variables,
+}: {
+	projectId: string
+	variables: EnvVariableSummary[]
+}) {
+	if (variables.length === 0) {
+		return (
+			<div className='border-border bg-card text-muted-foreground rounded-lg border border-dashed p-6 text-center text-sm'>
+				No environment variables yet.
+			</div>
+		)
+	}
+
+	return (
+		<div className='border-border bg-card overflow-x-auto rounded-lg border'>
+			<table className='w-full min-w-[760px] text-left'>
+				<thead>
+					<tr className='text-muted-foreground text-xs uppercase'>
+						<th className='px-3 py-3'>Key</th>
+						<th className='px-3 py-3'>Value</th>
+						<th className='px-3 py-3'>Type</th>
+						<th className='px-3 py-3'>Environment</th>
+						<th className='px-3 py-3'>Note</th>
+						<th className='px-3 py-3 text-right'>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{variables.map((variable) => (
+						<EnvVariableItem
+							key={variable._id}
+							projectId={projectId}
+							variable={variable}
+						/>
+					))}
+				</tbody>
+			</table>
+		</div>
+	)
+}

@@ -23,11 +23,6 @@ export function validatePassword(password: string): {
 		}
 	}
 
-	const hasUpperCase = /[A-Z]/.test(password)
-	const hasLowerCase = /[a-z]/.test(password)
-	const hasNumbers = /\d/.test(password)
-	const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password)
-
 	// Optional: Enforce strong password requirements
 	// if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasSpecialChar) {
 	//   return {
@@ -78,5 +73,5 @@ export async function comparePassword(
  * @returns True if password meets minimum requirements
  */
 export function meetsMinimumRequirements(password: string): boolean {
-	return password && password.length >= MIN_PASSWORD_LENGTH
+	return Boolean(password && password.length >= MIN_PASSWORD_LENGTH)
 }

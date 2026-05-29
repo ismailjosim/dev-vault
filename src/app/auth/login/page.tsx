@@ -1,15 +1,20 @@
+import { BrandLogo } from '@/components/common/BrandLogo'
 import { LoginForm } from '@/components/auth/LoginForm'
+import { ThemeToggle } from '@/components/theme/ThemeToggle'
 
 export default function LoginPage() {
 	return (
-		<div className='flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8'>
+		<div className='bg-background flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8'>
+			<div className='absolute top-6 right-6'>
+				<ThemeToggle />
+			</div>
 			<div className='w-full max-w-md'>
 				<div className='text-center'>
-					<h1 className='text-3xl font-bold text-gray-900'>DevVault</h1>
-					<h2 className='mt-2 text-xl font-semibold text-gray-900'>
+					<BrandLogo />
+					<h2 className='text-foreground mt-2 text-xl font-semibold'>
 						Welcome back
 					</h2>
-					<p className='mt-2 text-sm text-gray-600'>
+					<p className='text-muted-foreground mt-2 text-sm'>
 						Sign in to access your environment variables
 					</p>
 				</div>
