@@ -165,7 +165,7 @@ export function ExportModal({
 						</span>
 					)}
 				</div>
-				<pre className='border-border bg-background text-foreground mt-4 min-h-[360px] overflow-auto rounded-md border p-4 text-sm'>
+				<pre className='border-border bg-background text-foreground mt-4 min-h-90 overflow-auto rounded-md border p-4 text-sm'>
 					{preview || 'Generate an export to preview it here.'}
 				</pre>
 			</section>

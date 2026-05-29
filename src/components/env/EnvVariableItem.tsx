@@ -79,7 +79,7 @@ export function EnvVariableItem({
 			<td className='text-foreground px-3 py-3 font-mono text-sm'>
 				{variable.key}
 			</td>
-			<td className='text-muted-foreground max-w-[220px] truncate px-3 py-3 font-mono text-sm'>
+			<td className='text-muted-foreground max-w-55 truncate px-3 py-3 font-mono text-sm'>
 				{revealedValue ?? '••••••••'}
 			</td>
 			<td className='px-3 py-3'>

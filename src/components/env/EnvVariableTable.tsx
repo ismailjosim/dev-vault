@@ -20,7 +20,7 @@ export function EnvVariableTable({
 
 	return (
 		<div className='border-border bg-card overflow-x-auto rounded-lg border'>
-			<table className='w-full min-w-[760px] text-left'>
+			<table className='w-full min-w-190 text-left'>
 				<thead>
 					<tr className='text-muted-foreground text-xs uppercase'>
 						<th className='px-3 py-3'>Key</th>

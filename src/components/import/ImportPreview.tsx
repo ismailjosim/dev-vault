@@ -15,7 +15,7 @@ export function ImportPreview({
 
 	return (
 		<div className='border-border bg-card overflow-x-auto rounded-lg border'>
-			<table className='w-full min-w-[560px] text-left'>
+			<table className='w-full min-w-140 text-left'>
 				<thead>
 					<tr className='text-muted-foreground text-xs uppercase'>
 						<th className='px-3 py-3'>Key</th>
@@ -29,7 +29,7 @@ export function ImportPreview({
 							<td className='text-foreground px-3 py-3 font-mono text-sm'>
 								{variable.key}
 							</td>
-							<td className='text-muted-foreground max-w-[240px] truncate px-3 py-3 font-mono text-sm'>
+							<td className='text-muted-foreground max-w-60 truncate px-3 py-3 font-mono text-sm'>
 								{variable.value || '(empty)'}
 							</td>
 							<td className='px-3 py-3'>

@@ -65,7 +65,7 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
 				</div>
 
 				<div className='border-border bg-card mt-6 overflow-hidden rounded-lg border'>
-					<table className='w-full min-w-[640px] text-left'>
+					<table className='w-full min-w-160 text-left'>
 						<thead>
 							<tr className='text-muted-foreground text-xs uppercase'>
 								<th className='px-3 py-3'>Key</th>

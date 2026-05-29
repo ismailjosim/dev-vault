@@ -20,7 +20,7 @@ export function ThemeToggle() {
 
 	if (!mounted) {
 		return (
-			<div className='border-border bg-secondary h-9 w-[116px] rounded-md border' />
+			<div className='border-border bg-secondary h-9 w-29 rounded-md border' />
 		)
 	}
 
