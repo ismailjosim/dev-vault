@@ -45,17 +45,17 @@ Design and implement MongoDB schemas for Users, Projects, Environment Variables,
 
 ---
 
-### ✅ Step 3: Authentication System (1.5-2 hours)
+### ✅ Step 3: Authentication System with Better Auth (1.5-2 hours)
 
 **File:** [03-AUTHENTICATION.md](03-AUTHENTICATION.md)
 
-Implement secure user authentication using NextAuth with MongoDB, password hashing, and session management.
+Implement secure user authentication using Better Auth with MongoDB. All in one Next.js project.
 
 **Key Tasks:**
 
-- Configure NextAuth provider
+- Configure Better Auth in Next.js
 - Create signup/login pages
-- Implement password hashing (bcrypt)
+- Setup session management (HTTP-only cookies)
 - Setup protected routes middleware
 
 ---
@@ -222,26 +222,25 @@ Implement comprehensive testing, optimize performance, and prepare for deploymen
 ## Technology Stack
 
 ```
-Frontend:
-- Next.js 14+ (App Router)
-- React 18+
-- TypeScript
-- Tailwind CSS
+Frontend & Backend (Single Next.js Project):
+- Next.js 16+ (App Router, Turbopack)
+- React 19+ (latest)
+- TypeScript 5.1+
+- Tailwind CSS v3
 - shadcn/ui
 - Zod (validation)
 - React Hook Form
 - Framer Motion (animations)
 - react-syntax-highlighter (code highlighting)
 
-Backend:
-- Next.js API Routes
-- NextAuth (authentication)
+Authentication & Database:
+- Better Auth v1.6+ (TypeScript auth framework)
 - Mongoose (MongoDB ODM)
-- bcryptjs (password hashing)
-- crypto-js (encryption)
+- bcryptjs (password hashing, built-in to Better Auth)
+- crypto-js (AES-256 encryption for secrets)
 
 Database:
-- MongoDB (Atlas recommended)
+- MongoDB (Atlas or self-hosted)
 - Mongoose for schema validation
 
 Testing:
@@ -250,8 +249,8 @@ Testing:
 - React Testing Library
 
 Deployment:
-- Vercel (hosting)
-- MongoDB Atlas (database)
+- Vercel (recommended for Next.js)
+- MongoDB Atlas (cloud database)
 ```
 
 ---
@@ -261,8 +260,8 @@ Deployment:
 | Metric | Value |
 |--------|-------|
 | Total Development Time | ~23 hours |
-| Number of API Routes | 15+ |
-| Database Collections | 5 |
+| Number of API Routes | 10+ |
+| Database Collections | 5-6 |
 | Reusable Components | 30+ |
 | Built-in Templates | 8 |
 | Built-in Code Snippets | 8+ |
@@ -274,10 +273,16 @@ Deployment:
 ## Quick Start Commands
 
 ```bash
-# Initialize project
-npx create-next-app@latest devvault --typescript --tailwind --app
+# Initialize project (with latest Next.js 16)
+pnpm create next-app@latest devvault --yes
+cd devvault
 
-# Install dependencies
+# Install Better Auth and core dependencies
+pnpm add better-auth@latest mongodb mongoose bcryptjs crypto-js
+pnpm add zod react-hook-form framer-motion
+
+# Install dev dependencies
+pnpm add -D @types/bcryptjs
 pnpm install
 
 # Setup environment variables
@@ -302,17 +307,23 @@ vercel --prod
 
 ```env
 # Database
-MONGODB_URI=your_mongodb_connection_string
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/dbname
 
-# Authentication
-NEXTAUTH_SECRET=your_random_secret
-NEXTAUTH_URL=http://localhost:3000
+# Better Auth (Authentication)
+BETTER_AUTH_SECRET=generate_with_openssl_rand_base64_32
+BETTER_AUTH_URL=http://localhost:3000
 
-# Encryption
-ENCRYPTION_KEY=your_encryption_key
+# Frontend API URL
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 # Optional: Analytics & Monitoring
 SENTRY_DSN=your_sentry_dsn
+```
+
+**Generate BETTER_AUTH_SECRET:**
+
+```bash
+openssl rand -base64 32
 ```
 
 ---

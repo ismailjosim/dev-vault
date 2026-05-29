@@ -6,14 +6,31 @@ Design and implement MongoDB schemas for projects, environment variables, and re
 
 ## Database Models
 
-### 2.1 User Schema
+**Note:** User authentication is handled by Better Auth framework. Better Auth automatically creates and manages the User collection in MongoDB. You do NOT need to create your own User model.
+
+### 2.1 User Settings Schema (Optional - Custom User Preferences)
+
+**Better Auth User (Automatic):**
+
+- Better Auth creates users in MongoDB automatically
+- Stores: email, passwordHash, name, image, emailVerified, createdAt, updatedAt
+- Handles password hashing, session management, and authentication
 
 ```javascript
+// Optional: src/models/UserSettings.ts
 {
   _id: ObjectId,
+  betterAuthUserId: String (Better Auth user ID),
   email: String (unique),
-  password: String (hashed),
-  name: String,
+  theme: String (light, dark, system),
+  autoLockTimeout: Number,
+  defaultExportFormat: String,
+  defaultCopyFormat: String,
+  clipboardClearTimeout: Number,
+  emailNotifications: {
+    expiringCredentials: Boolean,
+    loginAlerts: Boolean
+  },
   createdAt: Date,
   updatedAt: Date
 }
@@ -24,7 +41,7 @@ Design and implement MongoDB schemas for projects, environment variables, and re
 ```javascript
 {
   _id: ObjectId,
-  userId: ObjectId (ref: User),
+  userId: String (Better Auth user ID from session),
   projectName: String,
   slug: String (unique, auto-generated),
   description: String,
@@ -46,12 +63,12 @@ Design and implement MongoDB schemas for projects, environment variables, and re
   _id: ObjectId,
   projectId: ObjectId (ref: Project),
   key: String,
-  value: String (encrypted),
+  value: String (encrypted with AES-256),
   type: String (secret, jwt, api_key, url, other),
   isPublic: Boolean,
   note: String,
-  environment: String,
-  expiryDate: Date,
+  environment: String (dev, prod, staging, test),
+  expiryDate: Date (optional),
   createdAt: Date,
   updatedAt: Date
 }
@@ -80,7 +97,7 @@ Design and implement MongoDB schemas for projects, environment variables, and re
 ```javascript
 {
   _id: ObjectId,
-  userId: ObjectId (ref: User),
+  userId: String (Better Auth user ID),
   title: String,
   category: String,
   language: String,
@@ -96,22 +113,24 @@ Design and implement MongoDB schemas for projects, environment variables, and re
 
 ### 2.1 Create Model Files
 
-- [ ] User model with password hashing
+- [ ] ~~User model~~ (Better Auth handles this automatically)
 - [ ] Project model with relationships
 - [ ] EnvVariable model with encryption support
 - [ ] Template model
 - [ ] Snippet model
+- [ ] UserSettings model (optional for custom preferences)
 
 ### 2.2 Setup Mongoose Connection
 
-- [ ] Create `lib/mongodb.ts` with connection logic
+- [ ] Create `src/lib/mongodb.ts` with connection logic
 - [ ] Add environment variables: `MONGODB_URI`
 - [ ] Implement connection pooling
+- [ ] Test connection with Better Auth
 
 ### 2.3 Implement Encryption Layer
 
-- [ ] Create `utils/encryption.ts` for AES encryption
-- [ ] Add encrypt/decrypt functions
+- [ ] Create `src/utils/encryption.ts` for AES-256 encryption
+- [ ] Add encrypt/decrypt functions for env variable values
 - [ ] Use crypto-js for secure storage
 
 ## Files to Create
