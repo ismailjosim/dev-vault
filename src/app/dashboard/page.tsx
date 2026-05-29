@@ -1,4 +1,5 @@
 import { FilterPanel } from '@/components/common/FilterPanel'
+import { BrandLogo } from '@/components/common/BrandLogo'
 import { SearchBar } from '@/components/common/SearchBar'
 import { LogoutButton } from '@/components/auth/LogoutButton'
 import { ProjectList } from '@/components/projects/ProjectList'
@@ -65,6 +66,9 @@ export default async function DashboardPage({
 			<div className='mx-auto max-w-6xl'>
 				<div className='flex flex-col justify-between gap-4 sm:flex-row sm:items-center'>
 					<div>
+						<div className='mb-3'>
+							<BrandLogo href='/dashboard' size='sm' />
+						</div>
 						<h1 className='text-foreground text-2xl font-semibold'>Projects</h1>
 						<p className='text-muted-foreground mt-1 text-sm'>
 							Manage project credentials and environment files.

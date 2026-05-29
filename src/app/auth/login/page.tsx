@@ -1,3 +1,4 @@
+import { BrandLogo } from '@/components/common/BrandLogo'
 import { LoginForm } from '@/components/auth/LoginForm'
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
 
@@ -9,7 +10,7 @@ export default function LoginPage() {
 			</div>
 			<div className='w-full max-w-md'>
 				<div className='text-center'>
-					<h1 className='text-foreground text-3xl font-bold'>DevVault</h1>
+					<BrandLogo />
 					<h2 className='text-foreground mt-2 text-xl font-semibold'>
 						Welcome back
 					</h2>

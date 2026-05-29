@@ -1,3 +1,4 @@
+import { BrandLogo } from '@/components/common/BrandLogo'
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
 
 export default function AuthErrorPage({
@@ -14,7 +15,7 @@ export default function AuthErrorPage({
 			</div>
 			<div className='w-full max-w-md'>
 				<div className='text-center'>
-					<h1 className='text-foreground text-3xl font-bold'>DevVault</h1>
+					<BrandLogo href='/auth/login' />
 					<h2 className='text-danger mt-2 text-xl font-semibold'>
 						Authentication Error
 					</h2>
