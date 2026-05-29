@@ -45,41 +45,41 @@ export function ProjectForm() {
 	return (
 		<form onSubmit={onSubmit} className='max-w-2xl space-y-5'>
 			{error && (
-				<div className='rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700'>
+				<div className='rounded border border-danger/30 bg-danger-foreground px-4 py-3 text-sm text-danger'>
 					{error}
 				</div>
 			)}
 
 			<div>
-				<label className='block text-sm font-medium text-zinc-800'>Name</label>
+				<label className='block text-sm font-medium text-foreground'>Name</label>
 				<input
 					name='projectName'
 					required
-					className='mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950'
+					className='mt-1 w-full rounded-md border border-border bg-card px-3 py-2 text-foreground outline-none focus:border-muted-foreground'
 					placeholder='DevVault'
 				/>
 			</div>
 
 			<div>
-				<label className='block text-sm font-medium text-zinc-800'>
+				<label className='block text-sm font-medium text-foreground'>
 					Description
 				</label>
 				<textarea
 					name='description'
 					rows={4}
-					className='mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950'
+					className='mt-1 w-full rounded-md border border-border bg-card px-3 py-2 text-foreground outline-none focus:border-muted-foreground'
 					placeholder='What does this project use these variables for?'
 				/>
 			</div>
 
 			<div className='grid gap-4 sm:grid-cols-2'>
 				<div>
-					<label className='block text-sm font-medium text-zinc-800'>
+					<label className='block text-sm font-medium text-foreground'>
 						Category
 					</label>
 					<select
 						name='category'
-						className='mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950'
+						className='mt-1 w-full rounded-md border border-border bg-card px-3 py-2 text-foreground outline-none focus:border-muted-foreground'
 					>
 						<option>Full Stack</option>
 						<option>Frontend</option>
@@ -90,22 +90,22 @@ export function ProjectForm() {
 				</div>
 
 				<div>
-					<label className='block text-sm font-medium text-zinc-800'>
+					<label className='block text-sm font-medium text-foreground'>
 						Framework
 					</label>
 					<input
 						name='framework'
 						defaultValue='Next.js'
-						className='mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950'
+						className='mt-1 w-full rounded-md border border-border bg-card px-3 py-2 text-foreground outline-none focus:border-muted-foreground'
 					/>
 				</div>
 			</div>
 
 			<div>
-				<label className='block text-sm font-medium text-zinc-800'>Tags</label>
+				<label className='block text-sm font-medium text-foreground'>Tags</label>
 				<input
 					name='tags'
-					className='mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950'
+					className='mt-1 w-full rounded-md border border-border bg-card px-3 py-2 text-foreground outline-none focus:border-muted-foreground'
 					placeholder='auth, payments, production'
 				/>
 			</div>
@@ -113,7 +113,7 @@ export function ProjectForm() {
 			<button
 				type='submit'
 				disabled={isSubmitting}
-				className='rounded-md bg-zinc-950 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60'
+				className='rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-60'
 			>
 				{isSubmitting ? 'Creating...' : 'Create project'}
 			</button>

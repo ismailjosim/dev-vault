@@ -2,6 +2,7 @@ import { FilterPanel } from '@/components/common/FilterPanel'
 import { SearchBar } from '@/components/common/SearchBar'
 import { ProjectList } from '@/components/projects/ProjectList'
 import { ProjectSummary } from '@/components/projects/ProjectCard'
+import { ThemeToggle } from '@/components/theme/ThemeToggle'
 import { getCurrentUser } from '@/lib/session'
 import { connectDB } from '@/lib/mongodb'
 import { serializeDocument } from '@/lib/api'
@@ -48,21 +49,24 @@ export default async function DashboardPage({
 		.limit(query.limit)
 
 	return (
-		<main className='min-h-screen bg-zinc-50 px-6 py-8'>
+		<main className='min-h-screen bg-background px-6 py-8'>
 			<div className='mx-auto max-w-6xl'>
 				<div className='flex flex-col justify-between gap-4 sm:flex-row sm:items-center'>
 					<div>
-						<h1 className='text-2xl font-semibold text-zinc-950'>Projects</h1>
-						<p className='mt-1 text-sm text-zinc-600'>
+						<h1 className='text-2xl font-semibold text-foreground'>Projects</h1>
+						<p className='mt-1 text-sm text-muted-foreground'>
 							Manage project credentials and environment files.
 						</p>
 					</div>
-					<Link
-						href='/dashboard/projects/create'
-						className='rounded-md bg-zinc-950 px-4 py-2 text-sm font-semibold text-white'
-					>
-						New project
-					</Link>
+					<div className='flex items-center gap-3'>
+						<ThemeToggle />
+						<Link
+							href='/dashboard/projects/create'
+							className='rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90'
+						>
+							New project
+						</Link>
+					</div>
 				</div>
 
 				<div className='mt-6 grid gap-3 lg:grid-cols-[1fr_360px]'>

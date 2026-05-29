@@ -72,18 +72,18 @@ export function EnvVariableItem({
 	}
 
 	return (
-		<tr className='border-t border-zinc-200'>
-			<td className='px-3 py-3 font-mono text-sm text-zinc-950'>{variable.key}</td>
-			<td className='max-w-[220px] truncate px-3 py-3 font-mono text-sm text-zinc-600'>
+		<tr className='border-t border-border'>
+			<td className='px-3 py-3 font-mono text-sm text-foreground'>{variable.key}</td>
+			<td className='max-w-[220px] truncate px-3 py-3 font-mono text-sm text-muted-foreground'>
 				{revealedValue ?? '••••••••'}
 			</td>
 			<td className='px-3 py-3'>
-				<span className='rounded bg-zinc-100 px-2 py-1 text-xs text-zinc-700'>
+				<span className='rounded bg-secondary px-2 py-1 text-xs text-secondary-foreground'>
 					{variable.type}
 				</span>
 			</td>
-			<td className='px-3 py-3 text-sm text-zinc-600'>{variable.environment}</td>
-			<td className='px-3 py-3 text-sm text-zinc-600'>
+			<td className='px-3 py-3 text-sm text-muted-foreground'>{variable.environment}</td>
+			<td className='px-3 py-3 text-sm text-muted-foreground'>
 				{variable.expiryDate
 					? `Expires ${variable.expiryDate.slice(0, 10)}`
 					: variable.note}
@@ -150,8 +150,8 @@ function IconAction({
 			aria-label={label}
 			className={`inline-flex h-8 w-8 items-center justify-center rounded-md border transition ${
 				tone === 'danger'
-					? 'border-red-200 text-red-700 hover:bg-red-50'
-					: 'border-zinc-200 text-zinc-700 hover:bg-zinc-50'
+					? 'border-danger/30 text-danger hover:bg-danger-foreground'
+					: 'border-border text-muted-foreground hover:bg-hover hover:text-foreground'
 			} disabled:cursor-not-allowed disabled:opacity-50`}
 		>
 			{children}

@@ -1,4 +1,5 @@
 import { ProjectForm } from '@/components/projects/ProjectForm'
+import { ThemeToggle } from '@/components/theme/ThemeToggle'
 import { getCurrentUser } from '@/lib/session'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
@@ -8,15 +9,18 @@ export default async function CreateProjectPage() {
 	if (!user?.id) redirect('/auth/login')
 
 	return (
-		<main className='min-h-screen bg-zinc-50 px-6 py-8'>
+		<main className='min-h-screen bg-background px-6 py-8'>
 			<div className='mx-auto max-w-6xl'>
-				<Link href='/dashboard' className='text-sm text-zinc-600'>
-					Back to dashboard
-				</Link>
-				<h1 className='mt-4 text-2xl font-semibold text-zinc-950'>
+				<div className='flex items-center justify-between'>
+					<Link href='/dashboard' className='text-sm text-muted-foreground'>
+						Back to dashboard
+					</Link>
+					<ThemeToggle />
+				</div>
+				<h1 className='mt-4 text-2xl font-semibold text-foreground'>
 					Create project
 				</h1>
-				<div className='mt-6 rounded-lg border border-zinc-200 bg-white p-6'>
+				<div className='mt-6 rounded-lg border border-border bg-card p-6'>
 					<ProjectForm />
 				</div>
 			</div>

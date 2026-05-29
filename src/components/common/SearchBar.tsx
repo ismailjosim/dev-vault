@@ -21,9 +21,9 @@ export function SearchBar() {
 				name='search'
 				defaultValue={params.get('search') || ''}
 				placeholder='Search projects'
-				className='w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950'
+				className='w-full rounded-md border border-border bg-card px-3 py-2 text-foreground placeholder:text-muted-foreground outline-none focus:border-muted-foreground'
 			/>
-			<button className='rounded-md bg-zinc-950 px-4 py-2 text-sm font-semibold text-white'>
+			<button className='rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90'>
 				Search
 			</button>
 		</form>
