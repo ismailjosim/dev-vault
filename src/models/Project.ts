@@ -11,6 +11,20 @@ export interface IProject extends Document {
 	isPinned: boolean
 	envVariables: Types.ObjectId[]
 	environments: string[]
+	documentation: {
+		clientRepo: string
+		serverRepo: string
+		liveURL: string
+		vercelURL: string
+		herokuURL: string
+		databaseName: string
+		adminEmail: string
+		testUserEmail: string
+		apiDocsURL: string
+		teamMembers: string[]
+		notes: string
+		status: 'active' | 'archived' | 'completed'
+	}
 	createdAt: Date
 	updatedAt: Date
 }
@@ -63,8 +77,26 @@ const projectSchema = new Schema<IProject>(
 		],
 		environments: {
 			type: [String],
-			enum: ['development', 'staging', 'production', 'test'],
-			default: ['development', 'production'],
+			enum: ['dev', 'staging', 'prod', 'test'],
+			default: ['dev', 'prod'],
+		},
+		documentation: {
+			clientRepo: { type: String, default: '' },
+			serverRepo: { type: String, default: '' },
+			liveURL: { type: String, default: '' },
+			vercelURL: { type: String, default: '' },
+			herokuURL: { type: String, default: '' },
+			databaseName: { type: String, default: '' },
+			adminEmail: { type: String, default: '' },
+			testUserEmail: { type: String, default: '' },
+			apiDocsURL: { type: String, default: '' },
+			teamMembers: { type: [String], default: [] },
+			notes: { type: String, default: '' },
+			status: {
+				type: String,
+				enum: ['active', 'archived', 'completed'],
+				default: 'active',
+			},
 		},
 	},
 	{

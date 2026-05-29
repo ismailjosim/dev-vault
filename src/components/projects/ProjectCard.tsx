@@ -8,6 +8,7 @@ export type ProjectSummary = {
 	framework: string
 	tags: string[]
 	isPinned: boolean
+	environments?: string[]
 	createdAt: string
 }
 

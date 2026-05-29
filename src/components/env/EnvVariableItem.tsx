@@ -1,5 +1,6 @@
 'use client'
 
+import { ExpiryBadge } from '@/components/env/ExpiryBadge'
 import { Clipboard, Copy, Eye, EyeOff, FileCode2, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -90,9 +91,10 @@ export function EnvVariableItem({
 				{variable.environment}
 			</td>
 			<td className='text-muted-foreground px-3 py-3 text-sm'>
-				{variable.expiryDate
-					? `Expires ${variable.expiryDate.slice(0, 10)}`
-					: variable.note}
+				<div className='flex flex-col gap-1'>
+					<ExpiryBadge expiryDate={variable.expiryDate} />
+					{variable.note && <span>{variable.note}</span>}
+				</div>
 			</td>
 			<td className='px-3 py-3 text-right'>
 				<div className='flex justify-end gap-2'>

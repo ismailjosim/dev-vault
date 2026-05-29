@@ -17,6 +17,7 @@ import {
 	KeyRound,
 	LayoutTemplate,
 	ShieldCheck,
+	Tags,
 } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
@@ -128,6 +129,12 @@ export default async function DashboardPage({
 						icon={<FileCheck2 className='h-4 w-4' />}
 						title='Env checker'
 						description='Compare saved keys to examples.'
+					/>
+					<ToolLink
+						href='/dashboard/tags'
+						icon={<Tags className='h-4 w-4' />}
+						title='Tags'
+						description='Browse project tag usage.'
 					/>
 				</div>
 

@@ -1,8 +1,10 @@
 import { EnvVariableForm } from '@/components/env/EnvVariableForm'
 import { EnvVariableSummary } from '@/components/env/EnvVariableItem'
 import { EnvVariableTable } from '@/components/env/EnvVariableTable'
+import { EnvironmentTabs } from '@/components/env/EnvironmentTabs'
 import { ExportMenu } from '@/components/env/ExportMenu'
 import { DeleteProjectDialog } from '@/components/projects/DeleteProjectDialog'
+import { PinProjectButton } from '@/components/projects/PinProjectButton'
 import { ProjectSummary } from '@/components/projects/ProjectCard'
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
 import { serializeDocument } from '@/lib/api'
@@ -15,21 +17,29 @@ import { notFound, redirect } from 'next/navigation'
 
 type ProjectDetailPageProps = {
 	params: Promise<{ id: string }>
+	searchParams: Promise<Record<string, string | string[] | undefined>>
 }
 
 export default async function ProjectDetailPage({
 	params,
+	searchParams,
 }: ProjectDetailPageProps) {
 	const user = await getCurrentUser()
 	if (!user?.id) redirect('/auth/login')
 
 	await connectDB()
 	const { id } = await params
+	const rawParams = await searchParams
+	const currentEnvironment =
+		typeof rawParams.environment === 'string' ? rawParams.environment : 'all'
 	const project = await Project.findOne({ _id: id, userId: user.id })
 
 	if (!project) notFound()
 
-	const variables = await EnvVariable.find({ projectId: project._id }).sort({
+	const envFilter: Record<string, unknown> = { projectId: project._id }
+	if (currentEnvironment !== 'all') envFilter.environment = currentEnvironment
+
+	const variables = await EnvVariable.find(envFilter).sort({
 		environment: 1,
 		key: 1,
 	})
@@ -67,7 +77,27 @@ export default async function ProjectDetailPage({
 							</span>
 						</div>
 					</div>
-					<DeleteProjectDialog projectId={projectPayload._id} />
+					<div className='flex flex-wrap gap-2'>
+						<PinProjectButton
+							projectId={projectPayload._id}
+							isPinned={projectPayload.isPinned}
+						/>
+						<Link
+							href={`/dashboard/projects/${projectPayload._id}/docs`}
+							className='border-border text-foreground hover:bg-hover rounded-md border px-3 py-2 text-sm font-medium transition'
+						>
+							Docs
+						</Link>
+						<DeleteProjectDialog projectId={projectPayload._id} />
+					</div>
+				</div>
+
+				<div className='mt-6'>
+					<EnvironmentTabs
+						projectId={projectPayload._id}
+						currentEnvironment={currentEnvironment}
+						environments={projectPayload.environments || ['dev', 'prod']}
+					/>
 				</div>
 
 				<div className='mt-6'>

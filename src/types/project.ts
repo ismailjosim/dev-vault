@@ -75,6 +75,7 @@ export const envVariableImportSchema = z.object({
 				isPublic: true,
 				note: true,
 				environment: true,
+				expiryDate: true,
 			}),
 		)
 		.min(1)
@@ -107,7 +108,37 @@ export const exportSchema = z.object({
 	environment: environmentSchema.optional(),
 })
 
+export const projectDocumentationSchema = z.object({
+	clientRepo: z.string().trim().url().or(z.literal('')).optional().default(''),
+	serverRepo: z.string().trim().url().or(z.literal('')).optional().default(''),
+	liveURL: z.string().trim().url().or(z.literal('')).optional().default(''),
+	vercelURL: z.string().trim().url().or(z.literal('')).optional().default(''),
+	herokuURL: z.string().trim().url().or(z.literal('')).optional().default(''),
+	databaseName: z.string().trim().max(120).optional().default(''),
+	adminEmail: z
+		.string()
+		.trim()
+		.email()
+		.or(z.literal(''))
+		.optional()
+		.default(''),
+	testUserEmail: z
+		.string()
+		.trim()
+		.email()
+		.or(z.literal(''))
+		.optional()
+		.default(''),
+	apiDocsURL: z.string().trim().url().or(z.literal('')).optional().default(''),
+	teamMembers: z.array(z.string().trim().min(1).max(80)).max(20).default([]),
+	notes: z.string().trim().max(5000).optional().default(''),
+	status: z.enum(['active', 'archived', 'completed']).default('active'),
+})
+
 export type ProjectCreateInput = z.infer<typeof projectCreateSchema>
 export type ProjectUpdateInput = z.infer<typeof projectUpdateSchema>
 export type EnvVariableCreateInput = z.infer<typeof envVariableCreateSchema>
 export type EnvVariableUpdateInput = z.infer<typeof envVariableUpdateSchema>
+export type ProjectDocumentationInput = z.infer<
+	typeof projectDocumentationSchema
+>

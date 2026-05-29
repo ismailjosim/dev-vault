@@ -20,6 +20,7 @@ export function EnvVariableForm({ projectId }: { projectId: string }) {
 	const [key, setKey] = useState('')
 	const [value, setValue] = useState('')
 	const [note, setNote] = useState('')
+	const [expiryDate, setExpiryDate] = useState('')
 	const [type, setType] = useState('other')
 	const [isSensitive, setIsSensitive] = useState(true)
 	const [isValueVisible, setIsValueVisible] = useState(false)
@@ -94,6 +95,7 @@ export function EnvVariableForm({ projectId }: { projectId: string }) {
 				type,
 				isPublic: !isSensitive,
 				note,
+				expiryDate: expiryDate ? new Date(expiryDate).toISOString() : null,
 				environment,
 			})),
 		)
@@ -121,6 +123,7 @@ export function EnvVariableForm({ projectId }: { projectId: string }) {
 		setKey('')
 		setValue('')
 		setNote('')
+		setExpiryDate('')
 		setType('other')
 		setIsSensitive(true)
 		setIsValueVisible(false)
@@ -212,6 +215,18 @@ export function EnvVariableForm({ projectId }: { projectId: string }) {
 									onChange={(event) => setNote(event.target.value)}
 									className='border-border bg-background text-foreground focus:border-muted-foreground mt-1 w-full rounded-md border px-3 py-2 text-sm outline-none'
 									placeholder='Where to rotate, or who to contact'
+								/>
+							</label>
+
+							<label className='block'>
+								<span className='text-muted-foreground text-xs font-medium'>
+									Expiry date (Optional)
+								</span>
+								<input
+									type='date'
+									value={expiryDate}
+									onChange={(event) => setExpiryDate(event.target.value)}
+									className='border-border bg-background text-foreground focus:border-muted-foreground mt-1 w-full rounded-md border px-3 py-2 text-sm outline-none'
 								/>
 							</label>
 						</div>

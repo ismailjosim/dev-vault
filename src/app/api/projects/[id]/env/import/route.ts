@@ -36,13 +36,21 @@ export async function POST(request: NextRequest, context: RouteContext) {
 			})
 
 			if (existingVariable) {
-				existingVariable.set(variableInput)
+				existingVariable.set({
+					...variableInput,
+					expiryDate: variableInput.expiryDate
+						? new Date(variableInput.expiryDate)
+						: null,
+				})
 				savedVariables.push(await existingVariable.save())
 				continue
 			}
 
 			const variable = await EnvVariable.create({
 				...variableInput,
+				expiryDate: variableInput.expiryDate
+					? new Date(variableInput.expiryDate)
+					: null,
 				projectId: project._id,
 			})
 			project.envVariables.addToSet(variable._id)
