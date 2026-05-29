@@ -9,8 +9,10 @@ import { connectDB } from '@/lib/mongodb'
 import { serializeDocument } from '@/lib/api'
 import { Project } from '@/models/Project'
 import { projectQuerySchema } from '@/types/project'
+import { KeyRound, LayoutTemplate, ShieldCheck } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import type { ReactNode } from 'react'
 
 type DashboardPageProps = {
 	searchParams: Promise<Record<string, string | string[] | undefined>>
@@ -76,6 +78,27 @@ export default async function DashboardPage({
 					<FilterPanel />
 				</div>
 
+				<div className='mt-6 grid gap-3 md:grid-cols-3'>
+					<ToolLink
+						href='/dashboard/tools/password-generator'
+						icon={<KeyRound className='h-4 w-4' />}
+						title='Password generator'
+						description='Create strong project passwords.'
+					/>
+					<ToolLink
+						href='/dashboard/tools/jwt-generator'
+						icon={<ShieldCheck className='h-4 w-4' />}
+						title='JWT generator'
+						description='Generate access and refresh secrets.'
+					/>
+					<ToolLink
+						href='/dashboard/templates'
+						icon={<LayoutTemplate className='h-4 w-4' />}
+						title='Templates'
+						description='Apply common .env presets.'
+					/>
+				</div>
+
 				<div className='mt-6'>
 					<ProjectList
 						projects={serializeDocument<ProjectSummary[]>(projects)}
@@ -83,5 +106,30 @@ export default async function DashboardPage({
 				</div>
 			</div>
 		</main>
+	)
+}
+
+function ToolLink({
+	href,
+	icon,
+	title,
+	description,
+}: {
+	href: string
+	icon: ReactNode
+	title: string
+	description: string
+}) {
+	return (
+		<Link
+			href={href}
+			className='rounded-lg border border-border bg-card p-4 text-card-foreground transition hover:border-muted-foreground'
+		>
+			<div className='flex items-center gap-2 text-sm font-semibold'>
+				{icon}
+				{title}
+			</div>
+			<p className='mt-1 text-sm text-muted-foreground'>{description}</p>
+		</Link>
 	)
 }
