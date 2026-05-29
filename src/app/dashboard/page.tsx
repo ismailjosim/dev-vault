@@ -1,5 +1,6 @@
 import { FilterPanel } from '@/components/common/FilterPanel'
 import { SearchBar } from '@/components/common/SearchBar'
+import { LogoutButton } from '@/components/auth/LogoutButton'
 import { ProjectList } from '@/components/projects/ProjectList'
 import { ProjectSummary } from '@/components/projects/ProjectCard'
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
@@ -60,6 +61,7 @@ export default async function DashboardPage({
 					</div>
 					<div className='flex items-center gap-3'>
 						<ThemeToggle />
+						<LogoutButton />
 						<Link
 							href='/dashboard/projects/create'
 							className='rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90'
