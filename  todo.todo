@@ -1,0 +1,8 @@
+every time i create project it has some environment variable use. but the problem is that whenever I clone a project from GitHub and run the project it's hard to find the env info. or worst case i lost and need to regenerate the environment variables. so i want to create a project to store the environment variable with the project name. then whenever i need to create the project i can grab the keys by search the project name and copy them by one click and paste it into my project.
+
+the features i want to add also with the project:
+- generate random strong password
+- generate access token for JWT token with
+- generate refresh token for JWT token
+- store all env data with key value pair and store them with project name.
+-
