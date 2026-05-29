@@ -1,3 +1,4 @@
+import { getSessionCookie } from 'better-auth/cookies'
 import { type NextRequest, NextResponse } from 'next/server'
 
 const publicRoutes = ['/', '/auth/login', '/auth/signup', '/auth/error']
@@ -9,11 +10,11 @@ export function proxy(request: NextRequest) {
 		(route) => pathname === route || pathname.startsWith(`${route}/`),
 	)
 
+	const sessionCookie = getSessionCookie(request)
+
 	if (isPublicRoute) {
 		return NextResponse.next()
 	}
-
-	const sessionCookie = request.cookies.get('better-auth.session_token')
 
 	if (!sessionCookie) {
 		const loginUrl = new URL('/auth/login', request.url)
