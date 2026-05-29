@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { readErrorMessage } from '@/utils/http'
 
 export function SignupForm() {
 	const router = useRouter()
@@ -29,7 +30,7 @@ export function SignupForm() {
 		setError(null)
 
 		try {
-			const response = await fetch('/api/auth/sign-up', {
+			const response = await fetch('/api/auth/sign-up/email', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -42,8 +43,9 @@ export function SignupForm() {
 			})
 
 			if (!response.ok) {
-				const error = await response.json()
-				setError(error.message || 'Signup failed. Please try again.')
+				setError(
+					await readErrorMessage(response, 'Signup failed. Please try again.'),
+				)
 				return
 			}
 
